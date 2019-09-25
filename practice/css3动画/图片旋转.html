@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img
+        {
+            animation: myfirst 3s linear infinite ;
+            -moz-animation: myfirst 5s;	/* Firefox */
+            -webkit-animation: myfirst 3s linear infinite ;	/* Safari 和 Chrome */
+            -o-animation: myfirst 5s;	/* Opera */
+        }
+        @keyframes myfirst
+        {
+            0%   {transform: rotate3d(0);}
+            100% {transform: rotate3d(0, -10, 0, 360deg);}
+
+
+        }
+        @-webkit-keyframes myfirst /* Safari 和 Chrome */
+        {
+            0%   {transform: rotate3d(0);}
+            100% {transform: rotate3d(0, -1, 0, 360deg);}
+        }
+
+    </style>
+</head>
+<body>
+<img src="../img/gold.png" alt="">
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>danmuApp</title>
+</head>
+<body>
+<style>
+    #content{
+        width: 80%;
+        border: 1px solid darkgreen;
+        height: 400px;
+        margin: 0 auto;
+        overflow: hidden;
+        /*word-break: break-all;*/
+    }
+    #btn{
+        width: 60%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    input{
+        width: 80%;
+        margin: 30px;
+        height: 50px;
+        border: 1px solid grey;
+        font-size: 20px;
+        color: #999999;
+    }
+    button{
+        background-color: white;
+        height: 35px;
+        width: 20%;
+        border-radius: 5px;
+    }
+    #send{
+        border: 1px solid #F4A460;
+        color: #F4A460;
+    }
+    #clear{
+        border: 1px solid #6E6E6E;
+        color: rgb(204, 204, 204);
+    }
+    /*#btnBox{*/
+         /*text-align: center;*/
+    /*}*/
+
+</style>
+<div>
+    <div id="content">
+
+    </div>
+    <div id="btn">
+        <input type="text" placeholder="说点什么吧。。。" id="sayContent">
+        <div id="btnBox">
+            <button id="send">发射</button>
+            <button id="clear">清屏</button>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script>
+    // 弹幕定时器
+    var timers = [];
+    // 控制弹幕显隐变量
+    var isShow = true;
+    // 监听发送按钮
+    $("#send").click(function () {
+        var word=$("#sayContent").val();
+        var jqueryDom = createScreenbullet(word);
+        addInterval(jqueryDom);
+    });
+    $("#clear").click(function () {
+        $("#content").empty();
+    });
+    // 新建一个弹幕
+    function createScreenbullet(text) {
+        var jqueryDom = $("<div class='bullet'>" + text + "</div>");
+        var fontColor = "rgb(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random()) + ")";
+        var fontSize = Math.floor((Math.random() + 1) * 24) + "px";
+        var left = $("#content").width() + "px";
+        var top = Math.floor(Math.random() * 400) + "px";
+        top = parseInt(top) > 352 ? "352px" : top;
+        jqueryDom.css({
+            "position": 'absolute',
+            "color": fontColor,
+            "font-size": fontSize,
+            "left": left,
+            "top": top
+        });
+        $("#content").append(jqueryDom);
+        return jqueryDom;
+    }
+    // 为弹幕添加定时任务
+    function addInterval(jqueryDom) {
+        var left = jqueryDom.offset().left - $("#content").offset().left;
+        var timer = setInterval(function () {
+            left--;
+            jqueryDom.css("left", left + "px");
+            if (jqueryDom.offset().left + jqueryDom.width() < $("#content").offset().left) {
+                jqueryDom.remove();
+                clearInterval(timer);
+            }
+        }, 10);
+        timers.push(timer);
+    }
+</script>
+</body>
+</html>

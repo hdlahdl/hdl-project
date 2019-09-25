@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div style="margin: 0 auto;width: 1000px;padding: 100px">
+    <div class="col-xs-6">
+        <label> 多选select：</label>
+        <select id="slpk" class="selectpicker"  multiple></select>
+    </div>
+    <div class="col-xs-6">
+        <label> 带搜索框多选select：</label>
+        <select id="slpk1" class="selectpicker" data-live-search="true" multiple></select>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script>
+
+    $(function() {
+        $(".selectpicker").selectpicker({
+            noneSelectedText : '请选择'//默认显示内容
+        });
+
+        //数据赋值
+        var select = $(".selectpicker");
+        select.append("<option value='1'>香蕉</option>");
+        select.append("<option value='2'>苹果</option>");
+        select.append("<option value='3'>橘子</option>");
+        select.append("<option value='4'>石榴</option>");
+        select.append("<option value='5'>棒棒糖</option>");
+        select.append("<option value='6'>桃子</option>");
+        select.append("<option value='7'>陶子</option>");
+        //初始化刷新数据
+        $(window).on('load', function() {
+            $('.selectpicker').selectpicker('refresh');
+        });
+    });
+
+</script>
+</body>
+</html>

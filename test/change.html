@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>change</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        body {
+            background: #9BCD9B;
+        }
+
+        #content {
+            width: 500px;
+            height: 300px;
+            background: whitesmoke;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        button {
+            width: 100px;
+            height: 50px;
+            background: #9BCD9B;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            top:220px;
+            left: 210px;
+            font-size: 14px;
+        }
+        h2{
+            text-align: center;
+            color: #333333;
+        }
+        h3{
+            padding: 10px 50px;
+            text-align: center;
+            color: #9BCD9B;
+        }
+        p{
+            padding:0 40px;
+            text-align: right;
+        }
+        i{
+            margin: 0 10px;
+            color: #9BCD9B;
+        }
+        h4{
+            position: absolute;
+            bottom:-50px;
+            left:230px;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <h2><i class="fa fa-quote-left"></i>亚马逊推荐的一生必读的书<i class="fa fa-quote-right"></i></h2>
+    <hr>
+    <h3 id="name">《霍乱时期的爱情》</h3>
+    <p id="author">加西亚·马尔克斯</p>
+    <button id="change">下一本</button>
+    <h4>by HDL</h4>
+</div>
+<script>
+    $("#change").click(function () {
+        var color = randomRgbaColor();
+        $("body").css("background", color);
+        $("i").css("color",color);
+        $("#name").css("color",color);
+        $("#author").css("color",color);
+        $("#change").css("background", color);
+        var a=bookArr.length;
+        var i=Math.floor(Math.random() * a);
+        var name=bookArr[i].bookName;
+        var author=bookArr[i].author;
+        $("#name").html(name);
+        $("#author").html(author)
+    });
+
+    function randomRgbaColor() { //随机生成RGBA颜色
+        var r = Math.floor(Math.random() * 256); //随机生成256以内r值
+        var g = Math.floor(Math.random() * 256); //随机生成256以内g值
+        var b = Math.floor(Math.random() * 256); //随机生成256以内b值
+        var alpha = Math.random(); //随机生成1以内a值
+        return `rgb(${r},${g},${b},${alpha})`; //返回rgba(r,g,b,a)格式颜色
+    }
+
+    var bookArr = [
+        {
+            bookName: "《1984》",
+            author :"乔治·奥威尔"
+        },
+        {
+            bookName: "《时间简史》",
+            author :"斯蒂芬·霍金"
+        },
+        {
+            bookName: "《一个惊人天才的伤心之作》",
+            author :"戴夫·艾格斯"
+        },
+        {
+            bookName: "《长路漫漫：一个童兵的回忆》",
+            author :"伊斯梅尔·比亚"
+        },
+        {
+            bookName: "《悲惨的开局：孤儿》",
+            author :"雷蒙·斯尼奇"
+        },
+        {
+            bookName: "《时间的皱纹》",
+            author :"马德琳·英格"
+        },
+        {
+            bookName: "《爱丽斯·门罗精选集：1968~1994》",
+            author :"艾丽斯·门罗"
+        },
+        {
+            bookName: "《爱丽丝梦游仙境I、II》",
+            author :"刘易斯·卡罗尔"
+        },
+        {
+            bookName: "《总统班底》",
+            author :"鲍勃·伍德沃德、卡尔·伯恩斯坦"
+        },
+        {
+            bookName: "《安琪拉的灰烬》",
+            author :"弗兰克·麦考特"
+        },
+        {
+            bookName: "《主啊，我是玛格丽特》",
+            author :"朱迪·布鲁姆"
+        },
+        {
+            bookName: "《美声》",
+            author :"安·帕切特"
+        },
+        {
+            bookName: "《宠儿》",
+            author :"托妮·莫里森"
+        }
+        ];
+</script>
+</body>
+</html>

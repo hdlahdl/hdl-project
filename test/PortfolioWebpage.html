@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Webpage</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<style>
+    #navbar-example {
+        background: #8FBC8F;
+        font-size: 20px;
+    }
+
+    a {
+        margin: 10px
+    }
+
+    .navbar-brand {
+        margin-left: 500px !important;
+    }
+
+    #headText {
+        margin-left: 500px;
+    }
+
+    #content {
+        width: 60%;
+        margin: 0 auto;
+        background: #888;
+    }
+
+    #ios {
+        padding: 50px;
+        font-size: 20px;
+        background: #B2DFEE
+    }
+
+    .intro-text {
+        width: 60%;
+        float: left;
+    }
+
+    .star-bright {
+        border-color: red
+    }
+
+    img {
+        width: 35%;
+        margin: 20px;
+    }
+
+    #svn {
+        background: #B0E0E6;
+        padding: 50px;
+        font-size: 20px;
+    }
+
+    #jmeter {
+        background: #AEEEEE;
+        padding: 50px;
+        font-size: 20px;
+    }
+
+    #footer-above {
+        background: #9BCD9B;
+        margin-top: -20px;
+        padding: 0 30%;
+        width: 100%
+    }
+</style>
+<nav id="navbar-example" class="navbar navbar-default navbar-static" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse"
+                    data-target=".bs-js-navbar-scrollspy">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><i class="fa fa-smile-o fa-lg"></i></a>
+        </div>
+        <div class="collapse navbar-collapse bs-js-navbar-scrollspy" id="headText">
+            <ul class="nav navbar-nav">
+                <li><a href="#ios">ABOUT</a></li>
+                <li><a href="#svn">PORTFOLIO</a></li>
+                <li><a href="#jmeter">CONTACT</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div data-spy="scroll" data-target="#navbar-example" data-offset="0"
+     style="height:500px;overflow:auto; position: relative;background:#666;margin-top: -21px">
+    <div id="content">
+        <div id="ios">
+            <div class="intro-text">
+                <p>Front-End Developer and UX/UI designer, with practical experience in project management, branding
+                    strategy, and creative direction; devoted to functional programming and information
+                    architecture.</p>
+                <hr class="star-bright">
+                <span class="skills">Web Developer - User Experience Designer - Graphic Artist</span>
+            </div>
+            <img src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt="">
+        </div>
+        <div id="svn">
+            <div class="intro-text">
+                <p>Front-End Developer and UX/UI designer, with practical experience in project management, branding
+                    strategy, and creative direction; devoted to functional programming and information
+                    architecture.</p>
+                <hr class="star-bright">
+                <span class="skills">Web Developer - User Experience Designer - Graphic Artist</span>
+            </div>
+            <img src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt="">
+        </div>
+        <div id="jmeter">
+            <div class="intro-text">
+                <p>Front-End Developer and UX/UI designer, with practical experience in project management, branding
+                    strategy, and creative direction; devoted to functional programming and information
+                    architecture.</p>
+                <hr class="star-bright">
+                <span class="skills">Web Developer - User Experience Designer - Graphic Artist</span>
+            </div>
+            <img src="https://c2.staticflickr.com/4/3689/10613180113_fdf7bcd316_b.jpg" alt="">
+        </div>
+    </div>
+    <footer>
+        <div id="footer-above" class="row">
+            <div class="col-xs-6">
+                <h3>About this page</h3>
+                <p>Made with <i class="fa fa-fw fa-coffee"></i> and <i class="fa fa-fw fa-music"></i><br>by <a
+                        href="http://qlip.in">Justin Sane</a>.</p>
+            </div>
+            <div class="col-xs-6">
+                <h3>Around the Web</h3>
+                <ul>
+                    <li><a class="button social" href="https://www.linkedin.com/in/hallaathrad"><i
+                            class="fa fa-fw fa-linkedin"></i></a></li>
+                    <li><a class="button social" href="https://github.com/hallaathrad"><i
+                            class="fa fa-fw fa-github"></i></a></li>
+                    <li><a class="button social" href="https://twitter.com/hallaathrad"><i
+                            class="fa fa-fw fa-twitter"></i></a></li>
+                    <li><a class="button social" href="https://www.flickr.com/photos/hallaathrad/" title="My Flickr"><i
+                            class="fa fa-fw fa-flickr"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <H1 id="time"></H1>
+</div>
+<script>
+    $(function () {
+        var nowDate = new Date();
+        var year = nowDate.getFullYear();
+        var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+        var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+        var hour = nowDate.getHours() < 10 ? "0" + nowDate.getHours() : nowDate.getHours();
+        var minute = nowDate.getMinutes() < 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();
+        var second = nowDate.getSeconds() < 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();
+        var times=year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+        $("#time").html(times)
+    })
+</script>
+
+</body>
+</html>

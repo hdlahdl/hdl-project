@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="checker" width="1800" height="2000"></canvas>
+<img id="text" src="img/x.png" alt="The text"/>
+
+<script>
+    var canvas=document.getElementById("checker");
+    var ctx=canvas.getContext('2d');
+
+    var text = document.getElementById("text");
+    ctx.drawImage(text,120,430);
+
+    ctx.lineWidth=3;
+    ctx.strokeStyle="#008B8B";
+
+    ctx.rect(20,20,800,900);
+    ctx.clip();
+
+    ctx.moveTo(20,20);
+    ctx.lineTo(820,20);
+    ctx.lineTo(820,920);
+    ctx.lineTo(20,920);
+    ctx.closePath();  //闭合
+
+    for (var i=1;i<9;i++){
+        var y=i*100;
+        ctx.moveTo(20,y+20);
+        ctx.lineTo(820,y+20);
+    }
+
+    for (var j=1;j<9;j++){
+        var y1=j*100;
+        ctx.moveTo(y1+20,20);
+        ctx.lineTo(y1+20,420);
+
+        ctx.moveTo(y1+20,520);
+        ctx.lineTo(y1+20,920);
+    }
+
+    ctx.moveTo(320,20);
+    ctx.lineTo(520,220);
+
+    ctx.moveTo(520,20);
+    ctx.lineTo(320,220);
+
+    ctx.moveTo(320,720);
+    ctx.lineTo(520,920);
+
+    ctx.moveTo(320,920);
+    ctx.lineTo(520,720);
+
+    function line(x,y){
+
+        ctx.moveTo(x,y);
+        ctx.lineTo(x+30,y);
+        ctx.lineTo(x+30,y-30);
+
+        ctx.moveTo(x,y+20);
+        ctx.lineTo(x+30,y+20);
+        ctx.lineTo(x+30,y+50);
+
+        ctx.moveTo(x+80,y);
+        ctx.lineTo(x+50,y);
+        ctx.lineTo(x+50,y-30);
+
+        ctx.moveTo(x+80,y+20);
+        ctx.lineTo(x+50,y+20);
+        ctx.lineTo(x+50,y+50);
+    }
+
+    line(80,210);
+    line(680,210);
+    line(-20,310);
+    line(180,310);
+    line(380,310);
+    line(580,310);
+    line(780,310);
+    line(-20,610);
+    line(180,610);
+    line(380,610);
+    line(580,610);
+    line(780,610);
+    line(80,710);
+    line(680,710);
+
+    ctx.stroke();
+
+
+</script>
+</body>
+</html>

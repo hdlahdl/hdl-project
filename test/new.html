@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.0.js"></script>
+</head>
+<body>
+<!--弹出提示窗口-->
+<div class="modal fade" id="Model" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    确定要更改上课状态？
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">确 定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<div id="123" class="modal fade" tabindex="-1"><!-- 编辑模态框 -->
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px">
+            <div class="modal-header no-padding">
+                <div class="table-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="white">&times;</span>
+                    </button>
+                    设置结算周期
+                </div>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" method="post" id="">
+                    <!-- /section:elements.form -->
+                    <input type="hidden" name="state" value="1"/>
+                    <div class="row" style="margin: 10px">
+                        <label class="col-sm-4 control-label no-padding-right">结算周期： </label>
+                        <div>
+                            <div>
+                                <label class="line-height-1 blue">
+                                    <input name="period" value="1" type="radio" class="ace" checked/>
+                                    <span class="lbl"> 自然月</span>
+                                </label>
+                                <label class="line-height-1 blue">
+                                    <input name="period" value="0" type="radio" class="ace"/>
+                                    <span class="lbl"> 自定义</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 10px;display: none" id="customBox" >
+                        <label class="col-sm-4 control-label no-padding-right">开始日期： </label>
+                        <div>
+                            <div>
+                                <select id="day"></select>——次月 <span id="active">31</span> 号
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 10px">
+                        <div class="col-md-offset-3">
+                            <button class="btn btn-info btn-xs" type="button">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                确定
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn btn-xs" type="reset">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                取消
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script>
+    $("input[name='period']").click(function () {
+        var a=$("input[name='period']:checked").val();
+        if(a==="0"){
+            $("#customBox").show()
+        }else{
+            $("#customBox").hide()
+        }
+    })
+    for (var i=0;i<31;i++){
+        var option='<option value="'+(i+1)+'">'+(i+1)+'号</option>'
+        $("#day").append(option)
+    }
+    $("#day").change(function () {
+        var b=$("#day").val();
+        if(b==="1"){
+            $("#active").text("31")
+        }else if(b==="31"){
+            $("#active").text("1")
+        }else{
+            $("#active").text(+b-1)
+        }
+        // var myDate=new Date()
+        // myDate.setDate(b)
+        // console.log(myDate)
+        // console.log(typeof myDate)
+    })
+</script>
+</body>
+</html>

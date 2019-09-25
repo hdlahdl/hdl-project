@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+	<title>请假管理 - 多纳外教招聘系统</title>
+	<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <style>
+        .dropdown-toggle{
+            display: block!important;
+        }
+        #weekTime{
+            opacity: 0!important;
+            width: 220px;
+            height: 0;
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/laydate.css"/>
+    <link rel="stylesheet" href="css/bootstrap-select.min.css"/>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/kkpager_blue.css">
+    <style>
+        #big {
+            padding: 10px;
+        }
+        .head-box {
+            padding: 1px 0 0;
+            border: 1px solid grey;
+            height: 60px;
+        }
+        .body-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid grey;
+        }
+        .table-box {
+            position: relative;
+            margin-top: 20px;
+        }
+        table > tr, th, td {
+            text-align: center;
+        }
+        .num p {
+            float: left;
+            margin-top: 28px;
+        }
+        .num a {
+            margin-top: 28px;
+            padding: 0 10px;
+            float: left;
+        }
+        .box {
+            margin-top: 10px;
+        }
+        .box i {
+            padding-left: 20px;
+        }
+        .color {
+            width: 400px;
+        }
+        .block {
+            float: left;
+            padding-left: 20px;
+        }
+        .block span {
+            margin-left: 5px;
+        }
+        td {
+            padding: 0 15px 0 0;
+        }
+        ul{
+            margin: 0;
+        }
+        select{
+            padding: 0;
+        }
+        li[class*=item-] {
+             border: 0 ;
+             border-left-width: 0px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .btn-default {
+            color: #333 !important;
+            background-color: #fff !important;
+            border-color: #ccc;
+            text-shadow: 0 0px 0 rgba(0,0,0,0)!important;
+        }
+        input[readonly] {
+             background: #ffffff !important;
+            cursor: default;
+        }
+        li>ul {
+             margin-left: 0;
+        }
+        .header-item-two {
+            border: 1px solid #ccc !important;
+            margin-left: 10px;
+        }
+        .btn .dropdown-toggle {
+            background: none!important;
+            outline: none!important;
+            border: 1px solid #ccc;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.0)!important;
+        }
+        .open .btn-default.dropdown-toggle, .open .btn.dropdown-toggle {
+             background-color: #ffffff !important;
+            border-color: #abbac3;
+        }
+        .btn-default:hover {
+            color: #333;
+            background-color: #e6e6e6 !important;
+            border-color: #adadad !important;
+        }
+        .btn-group>.btn {
+            margin: 0 1px 0 0;
+            border-width: 1px;
+        }
+
+    </style>
+</head>
+
+<body class="no-skin">
+<div class="main-container" id="main-container" style="overflow: hidden;">
+
+	<div class="main-content">
+        <div class="loader" style="display: none; position: fixed; left: 0; width: 100%; height: 100%; z-index: 1111; background: rgba(0,0,0,0.5)">
+            <img src="img/1232.png" width="50" height="50" style="position:absolute; left: 0;right: 0;top: 0;bottom: 0;margin: auto;">
+        </div>
+        <div id="big">
+            <div class="head-box">
+                <div class="box">
+                    <div class="week" style="font-size: 16px;float: left;margin-left: 10px">
+                        <span id="mon"></span>&nbsp;~&nbsp;<span id="sun"></span>
+                    </div>
+                    <div class="" style="float: left;margin-left: 10px">
+                        <i class="fa fa-arrow-left fa-lg " id="lastWeek"></i>
+                        <i class="fa fa-arrow-right fa-lg " id="nextWeek"></i>
+                    </div>
+                    <div class="" style="float: left;margin-left: 10px;margin-top: -3px">
+                        <button class="btn btn-default" style="width: 60px" id="thisWeek">本周</button>
+                    </div>
+                    <div class="" style="float: left;margin-top: -3px">
+                        <button class="btn btn-default" style="width: 85px;margin-left: 5px" id="checkConflict" data-toggle="modal" data-target="#Conflict">冲突检测</button>
+                    </div>
+                    <div class="" style="float: left;margin-top: -3px">
+                        <div class="laydate-box">
+                            <input type="text" id="laydateInput" readonly/>
+                            <img src="images/calendar1.png" alt="" class="icon data-icon"/>
+                            <div class="select-date">
+                                <div class="select-date-header">
+                                    <ul class="heade-ul">
+                                        <li class="header-item header-item-one">
+                                            <select name="" id="yearList"></select>
+                                        </li>
+                                        <li class="header-item header-item-two" onselectstart="return false">
+                                            <select name="" id="monthList"></select>
+                                        </li>
+                                        <li class="header-item header-item-three" onselectstart="return false">
+                                            <span class="reback">回到今天</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="select-date-body">
+                                    <ul class="week-list">
+                                        <li>日</li>
+                                        <li>一</li>
+                                        <li>二</li>
+                                        <li>三</li>
+                                        <li>四</li>
+                                        <li>五</li>
+                                        <li>六</li>
+                                    </ul>
+                                    <ul class="day-tabel"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: left;margin-top: 5px">
+                        <i class="fa fa-repeat fa-lg" id="refresh" style="cursor: pointer;"></i>
+                        <i class="fa fa-cog fa-lg" data-toggle="modal" data-target="#myModal"  style="cursor: pointer;"></i>
+                    </div>
+                    <div class="color" style="float: right">
+                        <div class="row">
+                            <div class="block" style="float: left">
+                                <p style="width: 20px;height: 20px; background:#FFEC8B;float: left"></p><span>上课</span></div>
+                            <div class="block" style="float: left">
+                                <p style="width: 20px;height: 20px; background:#87CEFA;float: left"></p><span>预占</span></div>
+                            <div class="block" style="float: left">
+                                <p style="width: 20px;height: 20px; background:#EE9A49;float: left"></p><span>其他</span></div>
+                            <div class="block" style="float: left">
+                                <p style="width: 20px;height: 20px; background:#FA8072;float: left"></p><span>冲突</span></div>
+                            <div class="block" style="float: left">
+                                <p style="width: 20px;height: 20px; background:#CCCCCC;float: left"></p><span>不可用</span></div>
+                        </div>
+                    </div>
+                </div>
+                <p style="clear: both"></p>
+            </div>
+            <div class="body-box">
+                <h3 style="margin: 0 0 20px 0">老师课程表</h3>
+                <div class="from-box">
+                    <form class="form-inline" id="teacherForm">
+                        <input type="hidden" name="pageNum" id="pageNum" value="0"/>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="tName" placeholder="老师昵称" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="teacherName" placeholder="老师用户名" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="labelSelect" placeholder="标签筛选" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label> 时间筛选：</label>
+                            <select class="selectpicker" id="weekTime" multiple>
+                                <option value="周一">周一</option>
+                                <option value="周二">周二</option>
+                                <option value="周三">周三</option>
+                                <option value="周四">周四</option>
+                                <option value="周五">周五</option>
+                                <option value="周六">周六</option>
+                                <option value="周日">周日</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="timeSelect">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="isFree">
+                                <option value="0">全部</option>
+                                <option value="1">空闲</option>
+                                <option value="2">非空闲</option>
+                            </select>
+                        </div>
+
+                        <a class="btn btn-primary" style="margin-left: 20px" id="check">查询</a>
+                        <button type="reset" class="btn btn-default" id="qk">清空</button>
+                    </form>
+                </div>
+
+                <div class="table-box">
+                    <table class="table table-bordered teacherTable" id="teacherTable">
+                    </table>
+                </div>
+                <!--分页-->
+                <div id="kkpager" style="margin-left: 25%;margin-right: 5%"></div>
+            </div>
+        </div>
+	</div><!-- /.main-content -->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">设置默认时间</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">时间筛选：</label>
+                            <select id="select" class="selectpicker" multiple>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary " id="timeConfirm" data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 冲突模态框（Modal） -->
+    <div class="modal fade" id="Conflict" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content" style="min-width: 750px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">冲突原因<span id="conflictTime" style="font-size: 15px"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="conflictBody" style="padding: 10px">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 编辑模态框（Modal） -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新增/编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="edit">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">老师用户名：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="leaveTname" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">选择日期：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="chooseDay" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">开始时间：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control choose" id="startTimeStr"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结束时间：</label>
+                            <div class="col-sm-5">
+                                <select class="form-control choose" id="endTimeStr"></select>
+                            </div>
+                            <div class="col-sm-3" style="padding:5px">
+                                <span>时段为<span style="padding:0 5px;font-size:large;color: red "id="hour">0</span>小时</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="leaveType"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">占用说明：</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="3" id="remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">确认状态：</label>
+                            <div class="col-sm-8" id="leaveStatus">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">跳过冲突</label>
+                            <div style="margin-top: 7px">
+                                <input type="checkbox" id="jumpClash">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div><!-- /.main-container -->
+<script src="js/jquery-1.11.0.js"></script>
+<script src="js/tablesMergeCell.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-paginator.min.js"></script>
+<script src="js/laydate.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/kkpager.js"></script>
+<script src="js/kkpager.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".selectpicker").selectpicker({
+            noneSelectedText: '请选择'
+        });
+        //$(".dropdown-menu").css("opacity",1)
+        //获取select时间
+        $.ajax({
+            url: "http://10.155.82.252:8080/dict/getDictListByType",
+            data: {
+                dictType: 25
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (datas) {
+                for (var i = 0; i < datas.length; i++) {
+                    $("#select").append("<option value='" + datas[i].selectName + "'>" + datas[i].selectName + "</option>");
+                    $("#startTimeStr").append("<option value='" + datas[i].selectValue + "'>" + datas[i].selectName + "</option>");
+                    $("#endTimeStr").append("<option value='" + datas[i].selectValue + "'>" + datas[i].selectName + "</option>");
+                }
+                var oldnumber = ["18:00","18:30","19:00","19:30","20:00","20:30"];
+                $('#select').selectpicker('val', oldnumber);
+                $('#select').selectpicker('refresh');
+
+                //timeSelect
+                var timeSelectArr=$("#select").selectpicker('val');
+                for (j=0;j<timeSelectArr.length;j++){
+                    $("#timeSelect").append("<option value='" + timeSelectArr[j] + "'>" + timeSelectArr[j] + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        $.ajax({
+            url: "http://10.155.82.252:8080/dict/getDictListByType",
+            data: {
+                dictType: 54
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (datas) {
+                for (var i = 0; i < datas.length; i++) {
+                    $("#leaveType").append("<option value='" + datas[i].selectValue + "'>" + datas[i].selectName + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        $.ajax({
+            url: "http://10.155.82.252:8080/dict/getDictListByType",
+            data: {
+                dictType: 58
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (datas) {
+                for (var i = 0; i < datas.length; i++) {
+                    $("#leaveStatus").append("<label class='radio-inline'><input type='radio' value='"+ datas[i].selectValue +"' name='optionsRadios'>" + datas[i].selectName + "</label>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+        $("#timeConfirm").click(function () {
+            $(".table-box").empty();
+            $("#timeSelect").empty();
+            //timeSelect
+            var timeSelectArr=$("#select").selectpicker('val');
+            console.log(timeSelectArr);
+            console.log(typeof timeSelectArr);
+            console.log(timeSelectArr.join(","));
+            $("#timeSelect").append("<option value=''>请选择</option>");
+            for (j=0;j<timeSelectArr.length;j++){
+                $("#timeSelect").append("<option value='" + timeSelectArr[j] + "'>" + timeSelectArr[j] + "</option>");
+            }
+        });
+        $("#sun").bind("DOMNodeInserted",function(){
+            $(".table-box").empty();
+        });
+        var ssoId='';
+        $(document).on("click","#teacherTable td.click",function (){
+            var day=$(this).closest("tbody").children("tr").find("td").eq($(this).index()-1).text().match(/\d+/g);
+            console.log(day)
+            var year="";
+            var leave="";
+            if (day[0]=="01") {
+                year=$("#sun").text().substring(0,4);
+                leave=year+"-"+day[0]+"-"+day[1];
+            }else{
+                year=$("#mon").text().substring(0,4);
+                leave=year+"-"+day[0]+"-"+day[1];
+            }
+            // var leave=year+"-"+day[0]+"-"+day[1];
+            $("#chooseDay").val(leave);
+            var leaveName=$(this).closest("tbody").children("tr").find(".nam").text();
+            $("#leaveTname").val(leaveName);
+            ssoId=$(this).closest("tbody").children("tr").find("input").val();
+        });
+        $(document).on("click","#teacherTable td.weekClick",function (){
+            var day=$(this).closest("tbody").children("tr").find("td").eq($(this).index()-2).text().match(/\d+/g);
+            console.log(day);
+            var year="";
+            var leave="";
+            if (day[0]=="01") {
+                year=$("#sun").text().substring(0,4);
+                leave=year+"-"+day[0]+"-"+day[1];
+            }else{
+                year=$("#mon").text().substring(0,4);
+                leave=year+"-"+day[0]+"-"+day[1];
+            }
+            // var year=$("#mon").text().substring(0,4);
+            // var leave=year+"-"+day[0]+"-"+day[1];
+            $("#chooseDay").val(leave);
+            var leaveName=$(this).closest("tbody").children("tr").find(".nam").text();
+            $("#leaveTname").val(leaveName);
+            ssoId=$(this).closest("tbody").children("tr").find("input").val();
+        });
+
+        //请假
+        $("#confirm").click(function () {
+            var times = $("#select").selectpicker('val');
+            var dateRange = $("#mon").html() + "~" + $("#sun").html();
+            var teachName=$("#leaveTname").val();
+            var leaveDateStr=$("#chooseDay").val();
+            var startTime=$("#startTimeStr option:selected").text();
+            var endTime=$("#endTimeStr option:selected").text();
+            var leaveType=$("#leaveType option:selected").val();
+            var leaveStatus=$("input[type='radio'][name='optionsRadios']:checked").val();
+            var remark=$("#remark").val();
+            function leave(){
+                $.ajax({
+                    url: "http://10.155.82.252:8080/leave/addLeave",
+                    data: {
+                        teachName:teachName,
+                        ssoId:ssoId,
+                        leaveDateStr:leaveDateStr,
+                        startTimeStr:startTime,
+                        endTimeStr:endTime,
+                        leaveType:leaveType,
+                        leaveStatus:leaveStatus,
+                        remark:remark
+                    },
+                    method: 'get',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.result == 600000) {
+                            alert("请假成功！");
+                            showPage(times,dateRange)
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function (err) {
+                        alert("异常！");
+                        console.log(err);
+                    }
+                });
+            }
+
+            if (startTime>=endTime) {
+                alert("请输入正确的请假时间！！！")
+            }else{
+            if ($('#jumpClash').is(':checked')){
+                leave()
+            }else{
+                $.ajax({
+                    url: "http://10.155.82.252:8080/leave/checkConflict",
+                    data: {
+                        teachName:teachName,
+                        ssoId:ssoId,
+                        leaveDateStr:leaveDateStr,
+                        startTimeStr:startTime,
+                        endTimeStr:endTime
+                    },
+                    method: 'get',
+                    dataType: 'json',
+                    success: function () {
+                        leave()
+                    },
+                    error: function (err) {
+                        alert("异常！");
+                        console.log(err);
+                    }
+                });
+                 }
+            }
+        });
+        //冲突检测
+        $("#checkConflict").click(function () {
+            var dateRange = $("#mon").html() + "~" + $("#sun").html();
+            var times = $("#select").selectpicker('val').join(",");
+            $.ajax({
+                url: "http://10.155.82.252:8080/lesson/conflictList",
+                data: {
+                    dateRange:dateRange,
+                    times:times
+                },
+                method: 'get',
+                dataType: 'json',
+                success: function (results) {
+                    $("#conflictTime").html(dateRange);
+                    if (results.result==600025){
+                        var data=results.data;
+                        var html = "";
+                        html+=" <table class=\"table table-bordered\">\n" +
+                                " <thead>\n" +
+                                " <tr bgcolor=\"#F0F0F0\">\n" +
+                                " <th>时段</th>\n" +
+                                " <th>原因</th>\n" +
+                                " <th>班级名称</th>\n" +
+                                " <th>班主任</th>\n" +
+                                " <th>课次名称</th>\n" +
+                                " <th>备注</th>\n" +
+                                " </tr>\n" +
+                                " </thead>\n"+
+                                " <tbody>"
+                        for (var i=0;i<data.length;i++){
+                            var tnamee='';
+                            var brzNameArr=data[i].brzName;
+                            if (brzNameArr==null || brzNameArr==undefined){
+                                tnamee='';
+                            } else{
+                                for (var j=0;j<brzNameArr.length;j++){
+                                    tnamee+=brzNameArr[j]+"<br>";
+                                }
+                            }
+                            html+="<tr>\n" +
+                                    " <td>"+data[i].weekDate+"<br>"+data[i].time+"</td>\n" +
+                                    " <td>"+data[i].teachName+""+data[i].leaveType+"</td>\n" +
+                                    " <td>"+data[i].className+"</td>\n" +
+                                    " <td>"+tnamee+"</td>\n" +
+                                    " <td>"+data[i].courseName+"</td>\n" +
+                                    " <td>"+data[i].leaveRemark+"</td>\n" +
+                                    "</tr>"
+                        }
+                        html+="<tbody>\n" +
+                                "</table>"
+                        $("#conflictBody").html(html);
+                    }else{
+                        $("#conflictBody").html("<h4 style='text-align:center'>"+results.message+"</h4>");
+                    }
+                },
+                error: function (err) {
+                    alert("异常！");
+                    console.log(err);
+                }
+            });
+        });
+        //刷新
+        $("#refresh").click(function () {
+            $("#pageNum").val("0");
+            var dateRange = $("#mon").html() + "~" + $("#sun").html();
+            var times = $("#select").selectpicker('val');
+            showPage(times,dateRange);
+        });
+
+        //计算时段
+        $('.choose').bind('input propertychange', function() {
+            var beginTime=new Date($("#chooseDay").val()+" "+$("#startTimeStr option:selected").text());
+            var endTime=new Date($("#chooseDay").val()+" "+$("#endTimeStr option:selected").text());
+            var differ=endTime.getTime()-beginTime.getTime();
+            var leave1=differ%(24*3600*1000);    //计算天数后剩余的毫秒数
+            var hours=Math.floor(leave1/(3600*1000));
+            //计算相差分钟数
+            var leave2=leave1%(3600*1000);   //计算小时数后剩余的毫秒数
+            var minutes=Math.floor(leave2/(60*1000));//计算相差分钟数
+            if (minutes==30) {
+                $("#hour").html(hours+0.5);
+            }else{
+                $("#hour").html(hours);
+            }
+            if (hours<0 || $("#hour").html()==0){
+                $("#hour").css("color","red")
+            }else {
+                $("#hour").css("color","black")
+            }
+        });
+
+        //关闭模态框时清空数据
+        $('#myModal1').on('hidden.bs.modal', function () {
+            $("#edit")[0].reset();
+            $("#hour").html(0)
+        })
+        $("#qk").click(function () {
+            //$("#weekTime").val("").trigger("change");
+             $("#weekTime").selectpicker('deselectAll');
+        });
+
+        $("#check").click(function () {
+            $("#pageNum").val("0");
+            var times = $("#select").selectpicker('val');
+            var dateRange = $("#mon").html() + "~" + $("#sun").html();
+            showPage(times,dateRange);
+            // showPage();
+        });
+    });
+
+    //显示课表
+    function showPage(times,dateRange) {
+        $.loading();
+        var dateRange =dateRange;
+        var times = times.join(",");
+        var nickName=$("#tName").val();
+        var teacherName=$("#teacherName").val();
+        var lable=$("#labelSelect").val();
+        var weekTime=$("#weekTime").selectpicker('val');
+        if(weekTime== undefined || weekTime == null){
+            weekTime = "";
+        }else{
+            weekTime = weekTime.join(",");
+        }
+        var time=$("#timeSelect option:selected").val();
+        var isFree=$("#isFree option:selected").val();
+        $.ajax({
+            url: "http://10.155.82.252:8080/lesson/teacherSchedule",
+            data:{
+                dateRange: dateRange,
+                times: times,
+                nickName:nickName,
+                teachName:teacherName,
+                label:lable,
+                weekTime:weekTime,
+                time:time,
+                isFree:isFree,
+                pageNum:$("#pageNum").val()
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (results) {
+                if (results.result==600025){
+                    var data=results.data;
+                    var html = "";
+                    html += " <table class=\"table table-bordered teacherTable\" id=\"teacherTable\">\n" +
+                            "<thead>\n" +
+                            "  <tr bgcolor=\"#F0F0F0\">\n" +
+                            "  <th>合计</th>\n" +
+                            "   <th></th>";
+                    for (var i = 0; i < data.totals.length; i++) {
+                        html += "<td>" + data.totals[i] + "</td>"
+                    }
+                    html += "</thead>";
+                    var teacherSchedule = data.singleTeacher;
+                    for (var j = 0; j < teacherSchedule.length; j++) {
+                        html += " <tbody class=\"tbody\">\n" +
+                                "     <tr style=\"font-weight: bold\">\n" +
+                                "     <th rowspan='"+(data.times.length+1)+"' width=\"100px\">\n" +
+                                "     <div style=\"margin-top: 100px;min-height: 100px\">\n" +
+                                "       <p class='nam'>" + teacherSchedule[j].nickName + "</p>\n" +
+                                "       <input type='hidden' value='"+ teacherSchedule[j].ssoId+"'>\n"+
+                                "       <p>" + teacherSchedule[j].label + "</p>\n" +
+                                "       <p>" + teacherSchedule[j].channelName + "</p>\n"+
+                                "     </div>\n" +
+                                "     </th>\n" +
+                                "     <th width=\"100px\" bgcolor=\"#F0F0F0\"></th>"
+                        var weekListArr = teacherSchedule[j].weekList;
+                        for (var c=0;c<weekListArr.length;c++){
+                            if (weekListArr[c].split("_")[1]==0){
+                                html += "<td bgcolor=\"#F0F0F0\" class='weekClick' data-toggle='modal' data-target='#myModal1'><span style=\"color:red;font-size:2px;font-weight:normal;\">今日</span>"+weekListArr[c].split("_")[0]+"</td>"
+                            }else{
+                                html += "<td bgcolor=\"#F0F0F0\" class='weekClick' data-toggle='modal' data-target='#myModal1'>"+weekListArr[c].split("_")[0]+"</td>"
+                            }
+                        }
+                        html += " <td rowspan='"+(data.times.length+1)+"' bgcolor=\"#F0F0F0\">\n"+
+                                "       <div style=\"margin-top: 100px\">\n" +
+                                "         <p>"+teacherSchedule[j].weeksNum+"/"+teacherSchedule[j].weeksTotal+"</p>\n"+
+                                "       </div>\n"+
+                                "     </td>\n"+
+                                " </tr>"
+                        var teachObj=teacherSchedule[j].teacherObjs;
+                        for (a=0;a<data.times.length;a++){
+                            html+="<tr>"
+                            html+="<td bgcolor=\"#F0F0F0\">"+data.times[a]+"</td>"
+                            var time=data.times[a]
+                            var val = teachObj[time];
+                           for (b=0;b<7;b++){
+                               var tWeek=val[time+"_"+rWeek(b)];
+                               if (tWeek.value==null || tWeek.value=="") {
+                                   if (tWeek.displayColor==0){
+                                       html+="<td style='background:#CCCCCC'></td>"
+                                   }else if (tWeek.displayColor==4) {
+                                       html+="<td class='click' data-toggle='modal' data-target='#myModal1'></td>"
+                                   }
+                               }else{
+                                   if (tWeek.displayColor==1) {
+                                       html+="<td style='background:#FFEC8B'>"+tWeek.value+"</td>"
+                                   }else if (tWeek.displayColor==2) {
+                                       html+="<td style='background:#FA8072'>"+tWeek.value+"</td>"
+                                   }else if (tWeek.displayColor==3){
+                                       html+="<td style='background:#EE9A49'>"+tWeek.value+"</td>"
+                                   }else if (tWeek.displayColor==5){
+                                       html+="<td style='background:#B4EEB4'>"+tWeek.value+"</td>"
+                                   }
+                               }
+                           }
+                            html+="</tr>"
+                        }
+                        html+="</tbody>"
+                    }
+                    html+="</table>";
+
+                    $(".table-box").html(html);
+
+                    //合并单元格
+                    $('.teacherTable').tablesMergeCell({
+                        cols: [1, 2, 3, 4, 5, 6, 7]
+                    });
+
+                    //分页
+                    kkpager.generPageHtml({
+                        mode: 'click',                //设置为点击时间，非跳转页面
+                        pno: data.pageNum,   //当前页
+                        total: data.pages,   //总页数
+                        totalRecords: data.total, //数据总条数
+                        isShowTotalRecords: true,     //是否显示数据总条数（这里因为默认不显示，所以进行设置）
+                        click: function (n) {
+                            getOtherList(n);     //点击按钮  会触发下面的方法getOtherStudentList
+                            this.selectPage(n);
+                            return false;
+                        }
+                    },true);
+                    $.noLoading();
+                }else{
+                    alert(results.message)
+                }
+            },
+            error: function (err) {
+                $.noLoading();
+                console.log(err);
+            },
+        });
+    }
+    /*点击分页查询当前页数据*/
+    function getOtherList(n) {
+        var pageNumElement = $("#pageNum");
+        pageNumElement.val(n);
+        var times = $("#select").selectpicker('val');
+        var dateRange = $("#mon").html() + "~" + $("#sun").html();
+        showPage(times,dateRange);
+    };
+    //按周显示时间
+    function getSelectDate(result) {
+        getWeek(result);
+    }
+    function getWeek(result) {
+        var dateArray = result.replace(/\s/g, "").split("-");
+        var now = new Date(dateArray[0], parseInt(dateArray[1] - 1), dateArray[2]);
+        week(now)
+    }
+    function week(now) {
+        var nowTime = now.getTime();
+        var day = now.getDay();
+        var oneDayTime = 24 * 60 * 60 * 1000;
+        var MondayTime = nowTime - (day - 1) * oneDayTime;//显示周一
+        var SundayTime = nowTime + (7 - day) * oneDayTime;//显示周日
+        var monn = new Date(MondayTime);
+        var sunn = new Date(SundayTime);
+        show(monn, sunn);
+    };
+    week(new Date());
+
+    $("#thisWeek").click(function () {
+        var now = new Date();
+        week(now);
+    });
+
+    $("#lastWeek").click(function () {
+        var dateArray = $("#mon").html().split("-");
+        var now = new Date(dateArray[0], parseInt(dateArray[1] - 1), dateArray[2]);
+        var oneDayLong = 24 * 60 * 60 * 1000;
+        var MondayTime =  now.getTime() - (now.getDay() - 1) * oneDayLong;
+        var SundayTime =  now.getTime() + (7 - now.getDay()) * oneDayLong;
+        var lastMonTime = MondayTime - 7 * oneDayLong;
+        var lastSunTime = SundayTime - 7 * oneDayLong;
+        var lastmon = new Date(lastMonTime);
+        var lastsun = new Date(lastSunTime);
+        show(lastmon, lastsun);
+    });
+
+    $("#nextWeek").click(function () {
+        var dateArray = $("#mon").html().split("-");
+        var now = new Date(dateArray[0], parseInt(dateArray[1] - 1), dateArray[2]);
+        var oneDayLong = 24 * 60 * 60 * 1000;
+        var MondayTime = now.getTime() - (now.getDay() - 1) * oneDayLong;
+        var SundayTime = now.getTime() + (7 - now.getDay()) * oneDayLong;
+        var nextMonTime = MondayTime + 7 * oneDayLong;
+        var nextSunTime = SundayTime + 7 * oneDayLong;
+        var nextmon = new Date(nextMonTime);
+        var nextsun = new Date(nextSunTime);
+        show(nextmon, nextsun);
+    });
+
+    function show(monn, sunn) {
+        var y = monn.getFullYear();
+        var m = monn.getMonth() + 1; //获取月份
+        var d = monn.getDate();
+        var yy = sunn.getFullYear();
+        var mm = sunn.getMonth() + 1; //获取月份
+        var dd = sunn.getDate();
+        document.getElementById("mon").innerHTML = y + "-" + m + "-" + d;
+        document.getElementById("sun").innerHTML = yy + "-" + mm + "-" + dd;
+    }
+    //返回星期
+    function rWeek(b){
+        var a="";
+        switch (b)
+        {
+            case 0:
+                a="周一";
+                break;
+            case 1:
+                a="周二";
+                break;
+            case 2:
+                a="周三";
+                break;
+            case 3:
+                a="周四";
+                break;
+            case 4:
+                a="周五";
+                break;
+            case 5:
+                a="周六";
+                break;
+            case 6:
+                a="周日";
+                break;
+        }
+        return a;
+    }
+    $.extend({
+        loading:function () {
+            $(".main-content .loader").show();
+        },
+        //取消加载动画
+        noLoading:function () {
+            $(".main-content .loader").hide();
+        },
+    })
+</script>
+</body>
+</html>

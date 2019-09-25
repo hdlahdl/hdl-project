@@ -1,0 +1,46 @@
+{
+  "msg": "OK",
+  "data": {
+    "60324293": {
+      "classroomId": 5046,
+      "lessonId": 22122,
+      "actionDataJson":
+        {"ActionTime":1545047874,
+          "AllowEnterTime":0,
+          "ClassID":19386107,
+          "CourseID":4665757,
+          "Device":0,
+          "Identity":1,
+          "LoginMobile":"13910183116",
+          "NickName":"Peter",
+          "SourceUID":2927202,
+          "StageTime":1545047874,
+          "UID":2927202,
+          "_id":"5c178f43b9576dfd8ccec0b5",
+          "ssoUserId":68427702
+        },
+         "actionType": "intoData"
+      },
+      "77362506": {
+      "classroomId": 5046,
+      "lessonId": 22121,
+      "actionDataJson":
+      {"ActionTime":1545047756,
+        "AllowEnterTime":0,
+        "ClassID":19386107,
+        "CourseID":4665757,
+        "Device":0,
+        "Identity":3,
+        "LoginMobile":"23710011029",
+        "NickName":"EricaP",
+        "SourceUID":4023742,
+        "StageTime":1545047756,
+        "UID":4023742,
+        "_id":"5c178eccb9576dfd8ccec02c",
+        "ssoUserId":77362506
+      },
+      "actionType": "intoData"
+    }
+  },
+  "status": 200
+}

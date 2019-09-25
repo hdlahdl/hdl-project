@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">click</button>
+<script src="js/jquery-1.11.0.js"></script>
+<script>
+    $("#btn").click(function () {
+        $.ajax({
+            url: "",
+            data: {
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code==800) {
+                    alert("成功！");
+                }
+            },
+            error: function (err) {
+                alert("异常！");
+                console.log(err);
+            }
+        });
+    });
+</script>
+
+<textarea id="area" name="ss" placeholder="请输入文本内容"></textarea>
+<textarea id="area1" name="ss" placeholder="请输入文本内容"></textarea>
+<textarea id="area2" name="ss" placeholder="请输入文本内容"></textarea>
+<p><span id="text-count">20</span>/20</p>
+<input type="date" id="uleaveDateStr">
+
+<script type="text/javascript">
+
+    /*字数限制*/
+    $("textarea").on("input propertychange", function() {
+        var $this = $(this);
+        var text  = $this.val();
+        if (text.length > 200) {
+            $this.val(text.substring(0, 200));
+        }
+    });
+    //监听日期改变清空class div
+    $("#uleaveDateStr").on("input propertychange",function(){
+        console.log($("#uleaveDateStr").val())
+        $("#area").val("")
+    });
+
+
+</script>
+
+</body>
+</html>

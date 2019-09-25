@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>多纳直播综合平台</title>
+    <link rel="stylesheet" href="./static/common/css/common-adminlte.css">
+</head>
+
+<body class="bg2" style="background: url(./static/admin/images/bg2-66aa8.jpg) top center no-repeat;background-size: cover;">
+    <div class="container container-login" style="margin-top: 0;">
+        <div class="row">
+            <div class="col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 text-center"  style="height: 136px;background: url(./static/admin/images/channel-header.png) top center no-repeat;background-size: contain;position: fixed;top: 0;right:0;z-index: 9;">
+                <p id="userName" style="font-size: 20px;margin: 10% auto 5% auto;color: #86b1d1;">&nbsp;</p>
+                <a id="baseLogout" style="font-size: 14px;color: #b2b7bb;font-weight: bold;" href="javascript:;">登出账户</a>
+            </div>
+            <div style="position: absolute;top:12%;left: 19%;z-index: 9;background-color: rgba(255, 255, 255, 0.8);">
+                <select id="switch" class="form-control">
+                    <option value="0" selected>直播组</option>
+                    <option value="1">移动组</option>
+                </select>
+                <!--<input name="status" type="checkbox" data-size="large" id="switch">-->
+            </div>
+            <div class="col-lg-10 col-lg-offset-1 text-center" style="margin-top: 3%;">
+                <img class="system-ctrl-slogan" style="width: 20%;" src="./static/admin/images/slogan-6b0a1.png" alt="">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div class="carousel-inner">
+                    </div><a class="carousel-control left" href="#myCarousel" data-slide="prev"><img src="./static/admin/images/left-ctrl-71153.png" alt=""></a><a class="carousel-control right" href="#myCarousel" data-slide="next"><img src="./static/admin/images/right-ctrl-edc51.png" alt=""></a></div>
+            </div>
+            <div class="col-lg-4 col-lg-offset-4 system-ctrl-foot login-foot">
+                <p class="text-center">北京新东方迅程网络科技股份有限公司</p>
+                <p class="text-center">Powered by Koolearn.com © 2018</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./static/common/js/common-adminlte.js"></script>
+    <script>
+        var koolearnUrl;
+        var baseUrl;
+        var token = getCookie("LOGIN_TOKEN");
+        $(function () {
+            $.ajax({
+                url: '/dict/getDictByType',
+                type: 'GET',
+                crossDomain:true,
+                data: {type:"configPath"},
+                success : function(data) {
+                    if (data.result == "600025"){
+                        // document.write(data);
+                        var result = data.data;
+                        if (result.length>0){
+                            for (var i=0;i<result.length;i++){
+                                var obj = result[i];
+                                if (obj.subType =="basePath"){
+                                    baseUrl = window.location.protocol+'//'+obj.value;
+                                    $("#defUrl").val(baseUrl);
+                                    // break;
+                                }else if (obj.subType =="loginPath"){
+                                    koolearnUrl = window.location.protocol+'//'+obj.value;
+                                }
+                            }
+                        }
+                        loadList(baseUrl);
+                        var userName = getCookie("userName");
+                        if(userName != "" && userName!= undefined){
+                            $("#userName").html(userName);
+                        }
+                    }else{
+                        alert("接口错误！");
+                    }
+                },
+                error : function (data){
+                    alert("获取地址失败，请刷新页面！");
+                }
+            })
+        });
+        $("#switch").change(function(){
+            var a=$("#switch").val();
+            if (a==="0"){
+                show(liveArr)
+            }else{
+                show(moveArr)
+            }
+        });
+        var liveArr=[];
+        var moveArr=[];
+        function loadList(url){
+        // ajaxRequest("http://localhost:8080/listSystem.do",{},(r) => {
+            $.ajax({
+                url: url+'/listSystemBySsoId',
+                type: 'GET',
+                crossDomain:true,
+                data: {},
+                success : function(data) {
+                    if(data.result != undefined){
+                        if (data.result == "600026"){
+                            alert("对不起您没有访问权限，请联系管理员！");
+                            window.location.href = "./login.html";
+                        }else if(data.result == "600006"){
+                            window.location.href = "./login.html";
+                        }else{
+                            // localStorage.setItem("listSystem",JSON.stringify(r.data.listSystem));
+                            // const listSystem = JSON.parse(localStorage.getItem("listSystem"));
+                            var result=data.data.listSystem;
+                            for (var i=0;i<result.length;i++) {
+                                if (result[i].authLevel == 0){
+                                    liveArr.push(result[i])
+                                }else {
+                                    moveArr.push(result[i])
+                                }
+                            }
+                            if (liveArr.length !== 0){
+                                $('#switch').val("0");
+                                show(liveArr);
+                                if (moveArr.length == 0) {
+                                    $('#switch').attr("disabled",true);
+                                }
+                            } else{
+                                $('#switch').val("1");
+                                $('#switch').attr("disabled",true);
+                                show(moveArr);
+                            }
+                        }
+                    }else{
+                        window.location.href = "./login.html"
+                    }
+
+                },
+                error : function (data){
+                    alert("获取菜单错误，请重新操作！");
+                }
+            })
+        }
+        function show(data){
+            const listSystem = JSON.parse(JSON.stringify(data));
+            if(listSystem != ""){
+                let columnList = "";
+                columnList += `<div class="item column-bg-div active">`
+                let listSystemLength = listSystem.length;
+                for (var i = 0; i < listSystemLength; i++) {
+                    columnList += `<div class="col-lg-4 column-div"><a id="450" class="verify-ctrl btn ${listSystem[i].systemValid ? '' : 'disabled'}" onclick="openUrl(${listSystem[i].id},'${listSystem[i].systemUrl}',${listSystem[i].isSsoid})"><img src="${listSystem[i].systemIco}" class="img-circle verify-ctrl-bgcolor2" alt=""><p class="column-p">${listSystem[i].systemName}</p><img class="column-btn" src="./static/admin/images/gocolumn-a5624.png" alt=""></a></div>`;
+                    if (i == 5) {
+                        columnList += `</div>`;
+                        if (listSystemLength > 6) {
+                            columnList += `<div class="item column-bg-div">`
+                        }
+                    }
+                    if (i == listSystemLength - 1) {
+                        columnList += `</div>`;
+                    }
+
+                }
+                $(".carousel-inner").html(columnList)
+            }else{
+                alert("对不起您没有访问权限，请联系管理员！");
+            }
+        }
+
+        $("#baseLogout").click(function(){
+            if(koolearnUrl != undefined && baseUrl != undefined){
+                window.location.href=koolearnUrl+"/sso/logout.do?next_page="+baseUrl+"/logout";
+            }else{
+                alert("参数错误，登出失败！");
+            }
+        })
+
+        function openUrl(id,systemUrl,isSsoid){
+            console.log(systemUrl);
+            let columnList = "";
+            if(token != undefined && token !="" && token != null){
+                if(isSsoid == 1){
+                    columnList += `?token=${token}&funcId=${id}`
+                }else{
+                    columnList += `?funcId=${id}`
+                }
+            }
+            sessionStorage.setItem("funcId", id);
+            console.log(systemUrl+columnList);
+            window.location=systemUrl+columnList;
+        }
+
+        function getCookie(c_name)
+        {
+            if (document.cookie.length>0)
+            {
+                c_start=document.cookie.indexOf(c_name + "")
+                if (c_start!=-1)
+                {
+                    c_start=c_start + c_name.length+1
+                    c_end=document.cookie.indexOf(";",c_start)
+                    if (c_end==-1) c_end=document.cookie.length
+                    return decodeURIComponent(document.cookie.substring(c_start,c_end))
+                }
+            }
+            return "";
+        }
+    </script>
+    <script type="text/javascript" src="./static/admin/js/channel.bundle.js"></script>
+</body>
+
+</html>

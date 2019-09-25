@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>今日课表</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="stylesheet" type="text/css" href="https://base.donut.cn/static/common/css/common-adminlte.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="../stylesheets/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="../stylesheets/bootstrap-switch.css">
+    <link rel="stylesheet" href="../stylesheets/time.css">
+    <link rel="stylesheet" href="../stylesheets/time_two.css">
+    <link rel="stylesheet" href="../stylesheets/font-awesome.min.css">
+    <style>
+        .lefts{
+            float: left;
+            width:25%;
+            height:90vh;
+        }
+        .rights{
+            float: left;
+            width:75%;
+            min-height:90vh;
+        }
+        .left_one{
+            height:32vh;
+            width:100%;
+            background-color: #ffffff;
+        }
+        .left_two{
+            height:60vh;
+            width:100%;
+            background-color: #ffffff;
+        }
+        .left_two_top{
+            width:100%;
+            height:6vh;
+        }
+        .left_two_top p{
+            float: left;
+            margin:10vh 8vw 2vh 6%;
+        }
+        .all{
+            margin-top:10vh;
+            float: left;
+            width:34%;
+        }
+        .left_two_middle{
+            width:100%;
+            height:43vh;
+            overflow-y:auto;
+        }
+        .right_one{
+            margin-left: 1vw;
+            width:100%;
+            height:16vh;
+        }
+        .right_two{
+            padding-right: 3%;
+            margin-left: 1vw;
+            width:100%;
+            min-height:76vh;
+        }
+        .right_one_span{
+            margin-left: 4%;
+            margin-top: 30px;
+            font-size:16px;
+        }
+        .right_two_left{
+            float: right;
+            width:32%;
+            background-color: #ffffff;
+            border: 1px solid #e1e1e1;
+        }
+        .right_two_left_top{
+            width:100%;
+            height:60px;
+            border-bottom: 1px solid #e1e1e1;
+        }
+        .right_two_middle{
+            float: right;
+            width:33%;
+            background-color: #ffffff;
+            border: 1px solid #e1e1e1;
+        }
+        .right_two_right{
+            float: right;
+            width:32%;
+            background-color: #ffffff;
+            border: 1px solid #e1e1e1;
+        }
+        .data{
+            cursor:pointer;
+            margin-top: 4px;
+            width:100%;
+            height:40px;
+            background-color: #e1e1e1;
+            -webkit-border-radius:6px;
+            -moz-border-radius:6px;
+            border-radius:6px;
+        }
+        .popup_window{
+            display:none;
+            width:600px;
+            height:400px;
+            text-align:center;
+            background:#fff;
+            position:fixed;
+            left:40%;/**左边50%**/
+            top:30%;/**顶部50%**/
+            margin-top:-50px;/**上移-50%**/
+            margin-left:-100px;/**左移-50%**/
+            border:1px solid black;
+        }
+        .popup_window_title{
+            width:100%;
+            height:46px;
+            background: #273b49;
+            text-align:center;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+    <header class="main-header">
+    </header>
+    <aside class="main-sidebar">
+    </aside>
+    <div class="content-wrapper" style="background-color:#fff;">
+    <div class="content" style="margin-left: 1%;min-height: 92vh;padding:10px;min-width: 600px;overflow: hidden;">
+
+    <div class="lefts main-content">
+
+        <div class="loader" style="display: none; position: fixed; left: 0;top:0; width: 100%; height: 100%; z-index: 1111; background: rgba(0,0,0,0.5)">
+            <img src="../img/loding.gif" width="50" height="50" style="position:absolute; left: 0;right: 0;top: 0;bottom: 0;margin: auto;">
+        </div>
+
+        <div class="left_one">
+            <div id='schedule-box' class="boxshaw"></div>
+            <div style="display:none;">
+                <h4 id='h3Ele'></h4>
+            </div>
+        </div>
+
+        <div class="left_two">
+
+            <div class="left_two_top">
+                <p>提醒</p>
+
+                <select id="actionType" class="all">
+                    <option value="" selected="">全部</option>
+                    <option value="intoData">进入教室</option>
+                    <option value="outData" >退出教室</option>
+                </select>
+            </div>
+
+            <div id="left_two_middle" class="left_two_middle"></div>
+
+            <input id="according" style="margin:0px 0px 0 20px;float: left;" name="Fruit" type="checkbox"  value="" />
+            <p style="font-size:12px;float: left;margin-top:0px;">仅显示老师信息</p>
+        </div>
+    </div>
+
+    <div class="rights">
+        <div class="right_one">
+            <span class="right_one_span" style="float: left;">搜索：</span>
+            <div style="width:50vw;height:20px;margin-left: 100px;">
+                <input  type="text" id="class_room_name"  placeholder="班级名称" style="width:10vw;float: left;margin: 20px 10px 0 0;" class="form-control">
+                <input  type="text" id="service_name"  placeholder="服务名称" style="width:10vw;float: left;margin: 20px 10px 0 0;" class="form-control">
+                <input  type="text" id="teacher_name"  placeholder="老师昵称" style="width:10vw;float: left;margin: 20px 10px 0 0;" class="form-control">
+                <input  type="text" id="assistant_name" placeholder="班主任（默认）" style="width:10vw;float: left;margin: 20px 10px 0 0;" class="form-control assistantName" id="schedule">
+                <br/>
+                <div style="float: left;margin-top: 20px;">
+                    <input  type="text" id="ssoUsername" placeholder="学员用户名" style="width: 8vw;margin: 0px 10px 0 0;float: left;" class="form-control">
+
+                    <select id="service_type" style="height:34px;float: left;width:8vw;margin: 0px 10px 0 0;" class="form-control">
+                        <option value="" selected="">服务类型</option>
+                        <option value="1">小班课</option>
+                        <option value="2" >大班课</option>
+                        <option value="3">一对一</option>
+                    </select>
+
+                    <botton id="search" class="btn btn-primary" style="margin-left: 18px;margin-right: 90px;" >搜索</botton>
+
+                    <input id="switch" name="status" type="checkbox" data-size="small" value="2">
+                    <span style="font-size:2px;">5秒刷新当前页面</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="right_two">
+            <div id="right_two_left" class="right_two_left">
+                <div class="right_two_left_top" >
+                    <p id="time_slot_3" style="text-align: center;padding-top:20px;margin:0;">20:00</p>
+                    <p id="eight_num" style="margin:0;text-align: center;"></p>
+                </div>
+
+                <div id="clock_data_3">
+
+                </div>
+            </div>
+            <div id="right_two_middle" class="right_two_middle">
+                <div class="right_two_left_top" >
+                    <p id="time_slot_2" style="text-align: center;padding-top:20px;margin:0;">19:00</p>
+                    <p id="seven_num" style="margin:0;text-align: center;"></p>
+                </div>
+
+                <div id="clock_data_2">
+
+                </div>
+            </div>
+            <div id="right_two_right" class="right_two_right">
+                <div class="right_two_left_top" >
+                    <p id="time_slot_1" style="text-align: center;padding-top:20px;margin:0;">18:00</p>
+                    <p id="six_num" style="margin:0;text-align: center;"></p>
+                </div>
+                
+                <div id="clock_data_1">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="popup_window" class="popup_window">
+        <div class="popup_window_title">
+            <i id="popup_window_remove" style="float: right;color:#fff;margin:10px 10px 0 0 ;cursor:pointer;" class="fa fa-times-circle"></i>
+        </div>
+
+        <div style="width:100%;height:6px;">
+            <div id="popup_window_pone">
+                <p  style="float: left;margin-right: 20px;margin-left: 20px;"></p>
+            </div>
+
+            <div id="popup_window_ptwo">
+                <p  style="float: left;"></p>
+            </div>
+
+            <div id="popup_window_pthree">
+                <p  style="float: right;margin-right: 10px;"></p>
+            </div>
+        </div>
+
+        <div style="width:100%;" class="col-sm-12">
+            <table style="width:100%;" id="example2" class="table table-bordered table-hover" role="grid" aria-describedby="example2_info">
+                <thead>
+                <tr id="head_tag" role="row">
+                    <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">类型</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">用户名</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">昵称</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">在线</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"  aria-label="CSS grade: activate to sort column ascending ">操作时间</th>
+                </tr>
+                </thead>
+                <tbody id="stu" >
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<input  type="text" style="display:none;"   id="input">
+</div>
+<script type="text/javascript" src="https://base.donut.cn/static/common/js/common-adminlte.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="../../daterangepicker/daterangepicker.js"></script>
+<script src="../../bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="../../js/kkpager2.js"></script>
+<script src="../../js/kkpager.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../../js/bootstrap-switch.js"></script>
+<script src="../../js/schedule.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#ssoUsername').keyup(trimkeyup);
+    });
+    /*去除input前后空格*/
+    function trimkeyup(e) {
+        lucene_objInput = $(this);
+        if(e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 13) {
+            var im = $.trim(lucene_objInput.val());
+            lucene_objInput.val(im);
+        }
+    }
+
+    $.extend({
+        loading:function () {
+            $(".main-content .loader").show();
+        },
+        //取消加载动画
+        noLoading:function () {
+            $(".main-content .loader").hide();
+        },
+    })
+
+    //获取今日课表上课时间段默认18:00 19:00 20:00
+    function getTimeSlot(){
+        $.ajax({
+            type: "GET",
+            url: basePath + "/common/time_slot",
+            async:false,
+            success: function (list) {
+                if (list!= null && list.length>0) {
+                    for(var i=0;i<list.length;i++){
+                        var $element = $('#time_slot_'+(i+1));
+                        $element.text(list[i].name);
+                    }
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {
+
+        var donutUrlSuffix;
+        var koolearnUrlSuffix;
+        init();
+        getTimeSlot();
+        $("#schedule").val(donutUrlSuffix)//登录用户显示
+        function prefixIntegerHeader(num) {
+            return (Array(2).join(0) + num).slice(-2);
+        }//自动补零方法
+        var myDate = new Date;
+        var year = myDate.getFullYear();//获取当前年
+        var yue = myDate.getMonth()+1;//获取当前月
+        var date = myDate.getDate();//获取当前日
+        yue=prefixIntegerHeader(yue);
+        date=prefixIntegerHeader(date);
+
+        $("#input").val(year+"-"+yue+"-"+date);//当前的日期
+        $("#h3Ele").text(year+"-"+yue+"-"+date);
+        //开关初始化
+        $('[name="status"]').bootstrapSwitch({
+            handleWidth:30,
+            state:false,
+
+            onText:"ON",
+            offText:"OFF",
+            onColor:"success",
+            offColor:"info",
+            size:"small",
+            onSwitchChange:function(event,state){
+                if(state==true){
+                    $(this).val("1");
+                    setTimeout( function(){ getLessonData()}, 5 * 1000 )
+                }else{
+                    $(this).val("2");
+                }
+            }
+        })
+
+        //日历
+        var mySchedule = new Schedule({
+            el: '#schedule-box',
+            clickCb: function (y,m,d) {
+                m=prefixIntegerHeader(m);//个位数自动补零
+                d=prefixIntegerHeader(d);
+                document.querySelector('#h3Ele').innerHTML = y+'-'+m+'-'+d
+
+                //时间变格式
+                function time_conversion(num){
+                    var a = "";
+                    a =  num+"~"+num;
+                    return a;
+                }
+                getLessonData();
+            },
+            nextMonthCb: function (y,m,d) {
+                m=prefixIntegerHeader(m);//个位数自动补零
+                d=prefixIntegerHeader(d);
+                document.querySelector('#h3Ele').innerHTML = y+'-'+m+'-'+d
+            },
+            nextYeayCb: function (y,m,d) {
+                m=prefixIntegerHeader(m);//个位数自动补零
+                d=prefixIntegerHeader(d);
+                document.querySelector('#h3Ele').innerHTML = y+'-'+m+'-'+d
+            },
+            prevMonthCb: function (y,m,d) {
+                m=prefixIntegerHeader(m);//个位数自动补零
+                d=prefixIntegerHeader(d);
+                document.querySelector('#h3Ele').innerHTML = y+'-'+m+'-'+d
+            },
+            prevYearCb: function (y,m,d) {
+                m=prefixIntegerHeader(m);//个位数自动补零
+                d=prefixIntegerHeader(d);
+                document.querySelector('#h3Ele').innerHTML = y+'-'+m+'-'+d
+            }
+        });
+        function getLessonData(){
+            $.loading();
+            $.ajax({
+                url:basePath+'/classroom/lesson-detail-data',
+                dataType:'json',
+                async:false,
+                data:{
+                    dateRange:time_conversion( $("#h3Ele").text()),
+                    courseType:$("#service_type").val(),/*服务类型*/
+                    courseName:$("#service_name").val(),/*服务名称*/
+                    classroomName:$("#class_room_name").val(),
+                    assistantName:$("#assistant_name").val(),
+                    teacherName:$("#teacher_name").val(),
+                    ssoUsername:$("#ssoUsername").val()
+                },
+                type:'get',
+                success:function(data){
+                    actionDataElements = [];
+                    $("#left_two_middle").empty();
+                    $("#clock_data_2").empty();
+                    $("#clock_data_1").empty();
+                    $("#clock_data_3").empty()
+                    for(var i=0;i<data.length;i++) {
+
+                        var html_div = '';
+                        html_div += '<div onclick="popup(' + data[i].lessonId + ')" class="data"  id="divdata" >'
+
+                        html_div += '<p class="pp" style="float:left;padding-top:10px;padding-left: 4px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; width:120px;" title="' + data[i].classroomName + " - " + data[i].teacherName + " - " + data[i].subject + '">' + data[i].classroomName + " - " + data[i].teacherName + " - " + data[i].subject + '</p>'
+                        var nowTime = new Date().getTime();
+                        //如果当前在上课，先默认缺勤
+                        if(nowTime>=(data[i].startTime-2*60*1000)&&nowTime<=data[i].endTime){
+                            html_div += '<i style="float:left;padding-top:14px;color: red" id="' + data[i].lessonId + '_' + data[i].teacherSsoId + '" class="fa fa-user-plus col"></i>'
+                        }else{
+                            html_div += '<i style="float:left;padding-top:14px;" id="' + data[i].lessonId + '_' + data[i].teacherSsoId + '" class="fa fa-user-plus col"></i>'
+                        }
+                        var students = data[i].students;
+                        if (students != null) {
+                            for (var j = 0; j < students.length; j++) {
+                                //如果当前在上课，先默认缺勤
+                                if(nowTime>=(data[i].startTime-2*60*1000)&&nowTime<=data[i].endTime){
+                                    html_div += '<i style="float:left;padding-top:14px;padding-left: 8px;color: red" id="' + data[i].lessonId + '_' + students[j].ssoId + '" class="fa fa-user col" ></i>'
+                                }else{
+                                    html_div += '<i style="float:left;padding-top:14px;padding-left: 8px;" id="' + data[i].lessonId + '_' + students[j].ssoId + '" class="fa fa-user col" ></i>'
+                                }
+                            }
+                        }
+                        var table_div = "";
+                        table_div +='<div id="popup_window_'+data[i].lessonId+'" class="popup_window">'
+                        table_div +='<div class="popup_window_title">'
+                        table_div +='<i id="popup_window_remove" style="float: right;color:#fff;margin:10px 10px 0 0 ;cursor:pointer;" class="fa fa-times-circle"></i>'
+                        table_div +='</div>'
+                        table_div +='<div style="width:100%;height:6px;">'
+                        table_div +='<div id="popup_window_pone">'
+                        table_div +='<p  style="float: left;margin-right: 20px;margin-left: 20px;">'+data[i].classroomName+'</p>'
+                        table_div +='</div>'
+                        table_div +='<div id="popup_window_ptwo">'
+                        table_div +='<p  style="float: left;">['+data[i].seq+1+'/'+data[i].reverseNum+'] '+data[i].subject+'</p>'
+                        table_div +='</div>'
+                        table_div +='<div id="popup_window_pthree">'
+                        table_div +='<p  style="float: right;margin-right: 10px;">'+data[i].timeStr+'</p>'
+                        table_div +='</div>'
+                        table_div +='</div>'
+                        table_div += '<div  style="width:100%;" class="col-sm-12">'
+                        table_div += '<table style="width:100%;" id="example2" class="table table-bordered table-hover" role="grid" aria-describedby="example2_info">'
+                        table_div += '<thead>'
+                        table_div += '<tr id="head_tag" role="row">'
+                        table_div += '<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">类型</th>'
+                        table_div += '<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">用户名</th>'
+                        table_div += '<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">昵称</th>'
+                        table_div += '<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">在线</th>'
+                        table_div += '<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"  aria-label="CSS grade: activate to sort column ascending ">操作时间</th>'
+                        table_div += '</tr>'
+                        table_div += '</thead>'
+                        table_div += '<tbody>'
+                        table_div += '<tr>'
+                        table_div += '<td>老师</td>'
+                        table_div += '<td>' + data[i].teacherUsername + '</td>'
+                        table_div += '<td>' + data[i].teacherName + '</td>'
+                        table_div += '<td id="actionType_'+data[i].lessonId+'_'+data[i].teacherSsoId+'">-</td>'
+                        table_div += '<td id="actionTime_'+data[i].lessonId+'_'+data[i].teacherSsoId+'">-</td>'
+                        table_div += '</tr>'
+                        var students =  data[i].students;
+                        for (var j = 0; j < students.length; j++) {
+                            var student = students[j];
+                            //弹窗
+                            table_div += '<tr>'
+                            table_div += '<td>学生</td>'
+                            var studentSsoNameTd = (student.studentSsoName == null) ? "-" : student.studentSsoName;
+                            table_div += '<td>' + studentSsoNameTd + '</td>'
+                            var studentNickname = (student.studentMessage == null) ? "-" : student.studentMessage.studentNickname;
+                            table_div += '<td>' + studentNickname + '</td>'
+                            table_div += '<td id="actionType_'+data[i].lessonId+'_'+student.ssoId+'">-</td>'
+                            table_div += '<td id="actionTime_'+data[i].lessonId+'_'+student.ssoId+'">-</td>'
+                            table_div += '</tr>'
+                        }
+                        table_div += '</tbody></table></div></div>'
+                        html_div += table_div;
+                        html_div += '</div>'
+                        var clock_1 = $('#time_slot_1').text().split(":")[0];
+                        var clock_2 = $('#time_slot_2').text().split(":")[0];
+                        var clock_3 = $('#time_slot_3').text().split(":")[0];
+                        if (getHour(data[i].startTime)== clock_1) {
+                            $("#clock_data_1").append(html_div);
+                        } else if (getHour(data[i].startTime) == clock_2) {
+                            $("#clock_data_2").append(html_div);
+                        } else if (getHour(data[i].startTime) == clock_3) {
+                            $("#clock_data_3").append(html_div);
+                        }
+                        //开课前两分钟
+                        var nowTime = new Date().getTime();
+                        if(nowTime>=(data[i].startTime-2*60*1000)&&nowTime<=data[i].endTime) {
+                            getAttendanceDataByLessonId(data[i].classroomId, data[i].lessonId, data[i]);
+                        }
+                    }
+                    var sixSum = $("#clock_data_1 .data").length;
+                    $("#six_num").html("（共"+sixSum+"条）");
+                    var sevenSum = $("#clock_data_2 .data").length;
+                    $("#seven_num").html("（共"+sevenSum+"条）");
+                    var eightSum = $("#clock_data_3 .data").length;
+                    $("#eight_num").html("（共"+eightSum+"条）");
+                    if($("#switch").val()==1){
+                        setTimeout( function(){ getLessonData()}, 5 * 1000 )
+                    }
+                    $.noLoading();
+                },
+                error: function (err) {
+                    $.noLoading();
+                },
+            });
+            bos_two();
+        }
+
+        //一进来的ajax
+        $(function come() {
+            loadAssistantName();
+            $("#search").click();
+        })
+        //点击搜索
+        $("#search").click(function () {
+            //时间变格式
+            function time_conversion(num){
+                var a = "";
+                a =  num+"~"+num;
+                return a;
+            }
+            getLessonData();
+        })
+    })
+
+    //时间变格式
+    function time_conversion(num){
+        var DATE_FORMAT =/^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/;
+        if(DATE_FORMAT.test(num)){
+            var a = "";
+            a =  num+"~"+num;
+            return a;
+        }else{
+            var year = num.split('年');
+            var yue = year[1].split('月');
+            var day = yue[1].split('日');
+            var a = year[0];
+            var b = yue[0];
+            var c = day[0];
+            var time = "";
+            time = a+"-"+b+"-"+c;
+            time = time+"~"+time;
+            return time;
+        }
+    }
+    //左侧下拉框改变
+    $("#actionType").change(function(){
+        bos_two();
+    })
+    //点击左下角仅显示老师信息
+    $("#according").click(function () {
+        bos_two();
+    })
+    var actionDataMap = new Map();
+    var global = "";
+    var lessonIdParam;
+    var dataInOneLesson;
+    //左侧某一条的记录对象
+    //左侧所有的记录对象
+    var actionDataElements = [];
+    function getAttendanceDataByLessonId(classroomId,lessonId,data_one){
+        dataInOneLesson = data_one;
+        lessonIdParam = lessonId;
+        $.ajax({
+            async:false,
+            url:basePath+'/classroom/lesson/attendance',
+            dataType:'json',
+            data:{
+                classroomId:classroomId,
+                lessonId:lessonId,
+                startTime:data_one.startTime,
+                endTime:data_one.endTime
+
+            },
+            type:'get',
+            success:function(data){
+                actionDataMap[lessonIdParam]=data;
+
+                var html_left ='';
+                var html_p ='';
+                if(data.data!=null){
+                    var map = data.data;
+                    //左侧进出教室记录
+                    //老师进出教室记录
+                    var actionTypeName='';
+                    var actionData = map[dataInOneLesson.teacherSsoId];
+
+                    if(actionData!=null&&actionData.lessonId==dataInOneLesson.lessonId){
+                        html_p += '<p style="font-size:8px;margin-left:16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; width:240px;" title="'+dataInOneLesson.classroomName+polishData(dataInOneLesson.classroomNickname)+''+dataInOneLesson.teacherUsername+'老师';
+                        if(actionData.actionType=='intoData'){actionTypeName='进入教室';}
+                        if(actionData.actionType=='outData'){actionTypeName='退出教室';}
+                        if(actionData.actionType=='kickOutData'){actionTypeName='被踢出';}
+                        var actionDataJson = actionData.actionDataJson;
+                        var actionDataJsonObject = JSON.parse(actionDataJson);
+                        html_p +=actionTypeName+' '+timestampToTime(actionDataJsonObject.ActionTime);
+                        html_p +='">';
+                        html_p += dataInOneLesson.classroomName+polishData(dataInOneLesson.classroomNickname)+''+dataInOneLesson.teacherUsername+'老师';
+                        if(actionData.actionType=='intoData'){actionTypeName='进入教室';}
+                        if(actionData.actionType=='outData'){actionTypeName='退出教室';}
+                        if(actionData.actionType=='kickOutData'){actionTypeName='被踢出';}
+                        html_p +=actionTypeName+' '+timestampToTime(actionDataJsonObject.ActionTime);
+                        html_p +=    '</p>';
+                        html_left +=html_p;
+                        var actionDataElement = new Object();
+                        actionDataElement.element = html_p;
+                        actionDataElement.userType = 'teacher';
+                        actionDataElement.actionType =actionData.actionType;
+                        actionDataElements.push(actionDataElement);
+                    }
+
+                    var students = dataInOneLesson.students;
+                    for(var j=0;j<students.length;j++){
+                        var studentMessage = students[j].studentMessage;
+                        var studentNickname;
+                        if(studentMessage!=null){
+                            studentNickname = studentMessage.studentNickname;
+                        }
+                        var key = students[j].ssoId;
+                        actionData = map[students[j].ssoId];
+                        if(actionData==null){continue}
+                        var actionDataJson = actionData.actionDataJson;
+                        var actionDataJsonObject = JSON.parse(actionDataJson);
+                        if(actionData!=null&&actionData.lessonId==dataInOneLesson.lessonId){
+                            html_p = '<p style="font-size:8px;margin-left:16px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; width:240px;" title="'+dataInOneLesson.classroomName+polishData(dataInOneLesson.classroomNickname)+''+students[j].studentSsoName+'学生';
+                            if(studentNickname!=null&&studentNickname!=''){html_left +='('+studentNickname+')'}
+                            if(actionData.actionType=='intoData'){actionTypeName='进入教室';}
+                            if(actionData.actionType=='outData'){actionTypeName='退出教室';}
+                            if(actionData.actionType=='kickOutData'){actionTypeName='被踢出';}
+                            html_p +=actionTypeName+' '+timestampToTime(actionDataJsonObject.ActionTime);
+                            html_p +='">';
+                            html_p += dataInOneLesson.classroomName+polishData(dataInOneLesson.classroomNickname)+''+students[j].studentSsoName+'学生';
+                            if(studentNickname!=null&&studentNickname!=''){html_left +='('+studentNickname+')'}
+                            if(actionData.actionType=='intoData'){actionTypeName='进入教室';}
+                            if(actionData.actionType=='outData'){actionTypeName='退出教室';}
+                            if(actionData.actionType=='kickOutData'){actionTypeName='被踢出';}
+                            html_p +=actionTypeName+' '+timestampToTime(actionDataJsonObject.ActionTime);
+                            html_p +='</p>';
+                            html_left +=html_p;
+                            var actionDataElement = new Object();
+                            actionDataElement.element = html_p;
+                            actionDataElement.userType = 'student';
+                            actionDataElement.actionType =actionData.actionType;
+                            actionDataElements.push(actionDataElement);
+                        }
+                    }
+                    for(var key in map){
+                        var eeoAction = map[key];
+                        var lessonId = eeoAction.lessonId;
+                        var actionType = eeoAction.actionType;
+                        var actionDataJson = eeoAction.actionDataJson;
+                        var actionDataJsonObject = JSON.parse(actionDataJson);
+                        var ActionTime = actionDataJsonObject.ActionTime;//时间戳，精确到s
+                        var elementId = lessonId+'_'+key;
+                        var element = $('#'+elementId);
+                        var actionType_td_id="actionType_"+elementId;
+                        var actionTime_td_id="actionTime_"+elementId;
+                        $('#'+actionTime_td_id).text(timestampToTime(ActionTime));
+
+                        if(actionType=='intoData'){
+                            $('#'+elementId).css("color","green");
+                            $('#'+actionType_td_id).text("进入教室");
+                        }
+                        if(actionType=='outData'){
+                            $('#'+elementId).css("color","grey");
+                            $('#'+actionType_td_id).text("退出教室");
+                            //
+                        }
+                        if(actionType=='kickOutData'){
+                            $('#'+elementId).css("color","grey");
+                            $('#'+actionType_td_id).text("踢出教室");
+                            //
+                        }
+                        if(actionType==''||actionType==null){
+                            $('#'+elementId).css("color","red");
+                            $('#'+actionType_td_id).text("缺勤");
+                            //
+                        }
+                        global = timestampToTime(ActionTime);
+                    }
+                }
+            }
+        });
+    }
+    //时间戳转时间
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    }
+
+    //onclick弹窗事件方法 显示弹出框
+    function popup(lessonId){
+        if($("#popup_window_"+lessonId).css("display")=="none"){
+            $("#popup_window_"+lessonId).show();
+        }
+    }
+    $(".right_two").delegate(".fa-times-circle","click",function(){
+        $(this).parents('.popup_window').hide();
+    });
+    //判断左侧下拉框和复选框方法
+    function bos_two() {
+        $("#left_two_middle").empty();//左侧数据清空
+        //动作类型：string
+        var actionType= $("#actionType").val();
+        //是否为老师 布尔
+        var isTeacher= $("#according").is(':checked');
+        //单点老师
+        if(actionType==""&&isTeacher){
+            for(var i=0;i<actionDataElements.length;i++) {
+                if(actionDataElements[i].userType=="teacher"){
+                    $("#left_two_middle").append(actionDataElements[i].element);
+                }
+            }
+        }
+        //老师且指定动作
+        if(isTeacher&&actionType!=""){
+            for(var j=0;j<actionDataElements.length;j++) {
+                if(actionDataElements[j].actionType==actionType&&actionDataElements[j].userType=="teacher"){
+                    $("#left_two_middle").append(actionDataElements[j].element);
+                }
+            }
+        }
+        //单点指定动作
+        if((!isTeacher)&&actionType!=""){
+            for(var j=0;j<actionDataElements.length;j++) {
+                if(actionDataElements[j].actionType==actionType){
+                    $("#left_two_middle").append(actionDataElements[j].element);
+                }
+            }
+        }
+        //老师动作都不点
+        if((!isTeacher)&&actionType==""){
+            for(var j=0;j<actionDataElements.length;j++) {
+                $("#left_two_middle").append(actionDataElements[j].element);
+            }
+        }
+    }
+</script>
+</body>
+</html>

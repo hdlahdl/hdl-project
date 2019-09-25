@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery-1.11.0.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<style>
+    .container{
+        width: 80%;
+        margin-top: 100px;
+    }
+    .bgRed{
+        background-color: #b2dba1;
+    }
+</style>
+<div class="container">
+
+    <table class="table table-bordered">
+        <tr>
+            <th><input type="checkbox" id="checkAll"> 序号</th>
+            <th>所属机构</th>
+            <th>姓名</th>
+            <th>手机号码</th>
+        </tr>
+        <tr>
+        <td><input type="checkbox" name="_dataCheckBox">1</td>
+        <td>山东</td>
+        <td>张三</td>
+        <td>15689547865</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="_dataCheckBox">1</td>
+            <td>山东</td>
+            <td>张三</td>
+            <td>15689547865</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    $("#checkAll").click(function () {
+        if ($('#checkAll').attr('checked')) {
+            $("[name='_dataCheckBox']").prop("checked", 'true');//全选
+            $("[name='_dataCheckBox']").each(function () {
+                $(this).parent().parent().toggleClass("bgRed");//添加选中样式
+            });
+        } else {
+            $("[name='_dataCheckBox']").removeAttr("checked");//取消全选
+            $("[name='_dataCheckBox']").each(function () {
+                $(this).parent().parent().toggleClass("bgRed");//取消选中样式
+            });
+        }
+    });
+    //除了表头（第一行）以外所有的行添加click事件.
+    $("tr").first().nextAll().click(function () {
+        //如果没有某个样式则加上，否则去除
+        $(this).children().toggleClass("bgRed");
+        if ($(this).children().hasClass("bgRed")){//如果有某个样式则表明，这一行已经被选中
+            $(this).children().first().children().attr("checked", true);
+        } else {                                  //如果没有被选中
+            $(this).children().first().children().attr("checked", false);
+        }
+    });
+
+</script>
+</body>
+</html>

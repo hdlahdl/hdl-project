@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+</head>
+<body>
+<div style="border: 1px solid;margin-top:20px;">
+    <div style="float:left;width:100px;height:200px;background-color:red;"></div>
+    <div style="position:relative;left:150px;width:100px;height:100px;background-color:green;"></div>
+</div>
+
+<div style="border: 1px solid;position:relative;top:150px;">
+    <div style="position:absolute;width:100px;height:200px;background-color:red;">使用absolute对父div的影响</div>
+    <div style="position:relative;left:150px;width:100px;height:100px;background-color:green;"></div>
+</div>
+<div style="border: 1px solid;position:relative;top:300px;">
+    <div style="width:100px;height:200px;background-color:red;">不使用absolute对父div的影响</div>
+    <div style="position:relative;left:150px;width:100px;height:100px;background-color:green;"></div>
+</div>
+</body>
+</html>
+<!--<style>-->
+    <!--/*.div { padding:20px; margin:10px 0 0 10px; background-color:pink; float:left; }*/-->
+    <!--/*.abs { position:absolute; }*/-->
+    <!--img{-->
+        <!--width: 200px;-->
+    <!--}-->
+<!--</style>-->
+<!--&lt;!&ndash;<div class="div">&ndash;&gt;-->
+    <!--&lt;!&ndash;<img src="img/123.jpg"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;图片无absolute&ndash;&gt;-->
+    <!--&lt;!&ndash;文字之所以会环绕含有float属性的图片时因为浮动破坏了正常的line boxes。&ndash;&gt;-->
+    <!--&lt;!&ndash;图片与文字都时inline box元素，但是默认的文字会与图片的下方对其，因为：&ndash;&gt;-->
+    <!--&lt;!&ndash;line boxes的高度是由其内部最高的inline boxes的高度决定的，所以这里line boxes的高度就是图片的高度。&ndash;&gt;-->
+    <!--&lt;!&ndash;此时图片与文字是同一box类型的元素（都是inline boxes），是在同一行上的，所以，默认状态下，一张图片只能与一行文字对齐。&ndash;&gt;-->
+    <!--&lt;!&ndash;而要想让一张图片要与多行文字对齐，您唯一能做的就是破坏正常的line boxes模型。 就是让图片float&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>-->
+    <!--&ndash;&gt;-->
+<!--<div class="div">-->
+    <!--<img class="abs" src="img/123.jpg" onmouseover="move()" onmouseout="on()"/>-->
+<!--</div>-->
+<!--<script>-->
+    <!--function move() {-->
+        <!--document.getElementsByClassName("abs")[0].style.marginLeft="100px";-->
+    <!--}-->
+    <!--function on() {-->
+        <!--document.getElementsByClassName("abs")[0].style.marginLeft="0";-->
+    <!--}-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

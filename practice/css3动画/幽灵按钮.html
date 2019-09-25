@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .btn-group{
+            /*width: 1200px;*/
+            margin: 200px;
+            display: flex;
+            justify-content:space-between;
+        }
+        .btn{
+            width: 300px;
+            height: 60px;
+            background-color: dodgerblue;
+            text-align: center;
+            line-height: 60px;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .btn a{
+            text-decoration: none;
+            color: white;
+            font: bold 20px Arial;
+        }
+        .btn-top,.btn-bottom{
+            width: 0;
+            height: 10px;
+            background-color: dodgerblue;
+            position: absolute;
+        }
+        .btn-top{
+            right: 0;
+            top: 0;
+        }
+        .btn-bottom{
+            left: 0;
+            bottom: 0;
+        }
+        .btn:hover .btn-top{
+            width: 100%;
+            transition: .3s;
+            background-color: dodgerblue;
+        }
+        .btn:hover .btn-bottom{
+            width: 100%;
+            transition: .3s;
+            background-color: dodgerblue;
+        }
+        .btn:hover{
+            background-color: white;
+        }
+        .btn:hover a{
+            color: dodgerblue;
+        }
+
+    </style>
+</head>
+<body>
+<div class="btn-group">
+    <div class="btn">
+        <a href="javascript:;">HTML</a>
+        <div class="btn-top"></div>
+        <div class="btn-bottom"></div>
+    </div>
+    <div class="btn">
+        <a href="javascript:;">CSS</a>
+        <div class="btn-top"></div>
+        <div class="btn-bottom"></div>
+    </div>
+    <div class="btn">
+        <a href="javascript:;">JavaScript</a>
+        <div class="btn-top"></div>
+        <div class="btn-bottom"></div>
+    </div>
+</div>
+
+</body>
+</html>

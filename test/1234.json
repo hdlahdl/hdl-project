@@ -1,0 +1,1014 @@
+{
+  "startTime": 1541397600000,
+  "endTime": 1541941200000,
+  "dateRange": "2018-11-05~2018-11-11",
+  "nickName": null,
+  "teachName": null,
+  "ssoId": null,
+  "label": null,
+  "weekTime": null,
+  "time": null,
+  "isFree": null,
+  "times": [
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "18:00",
+    "18:30"
+  ],
+  "singleTeacher": [
+    {
+      "teachObjs": [
+        {
+          "time": "14:00",
+          "timeDate": 21600000,
+          "scheduleTime": [
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value":"冲突",
+              "displayColor": 2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": "其他",
+              "displayColor": 3,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "14:30",
+          "timeDate": 23400000,
+          "scheduleTime": [
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "15:00",
+          "timeDate": 25200000,
+          "scheduleTime": [
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "15:30",
+          "timeDate": 27000000,
+          "scheduleTime": [
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "18:00",
+          "timeDate": 36000000,
+          "scheduleTime": [
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "18:30",
+          "timeDate": 37800000,
+          "scheduleTime": [
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": null,
+              "displayColor":4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        }
+      ],
+      "weeksTotal": 3,
+      "weeksNum": 3,
+      "weekList": [
+        {
+          "time": "11/05",
+          "timeIndex": 0,
+          "weeks": "周一",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 0
+        },
+        {
+          "time": "11/06",
+          "timeIndex": 0,
+          "weeks": "周二",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/07",
+          "timeIndex": 0,
+          "weeks": "周三",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/08",
+          "timeIndex": 0,
+          "weeks": "周四",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/09",
+          "timeIndex": 0,
+          "weeks": "周五",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/10",
+          "timeIndex": 0,
+          "weeks": "周六",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/11",
+          "timeIndex": 0,
+          "weeks": "周日",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        }
+      ],
+      "weekTotal": null,
+      "nickName": "teacher_lms",
+      "teachName": "aaaa",
+      "ssoId": 54645184,
+      "label": "qqqq",
+      "channelName": "qqqq"
+    },
+    {
+      "teachObjs": [
+        {
+          "time": "14:00",
+          "timeDate": 21600000,
+          "scheduleTime": [
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value":"冲突",
+              "displayColor": 2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": "其他",
+              "displayColor": 3,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "14:30",
+          "timeDate": 23400000,
+          "scheduleTime": [
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "14:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "15:00",
+          "timeDate": 25200000,
+          "scheduleTime": [
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "15:30",
+          "timeDate": 27000000,
+          "scheduleTime": [
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": "[正常] 不是吧vvvvv2(1/2) [助教03, 助教04, 测试, 助教001]",
+              "displayColor": 1,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "15:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "18:00",
+          "timeDate": 36000000,
+          "scheduleTime": [
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:00",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        },
+        {
+          "time": "18:30",
+          "timeDate": 37800000,
+          "scheduleTime": [
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周一",
+              "value": "冲突",
+              "displayColor":2,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周二",
+              "value": null,
+              "displayColor":4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周三",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周四",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周五",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周六",
+              "value": null,
+              "displayColor": 4,
+              "ssoId": null,
+              "isToday": 0
+            },
+            {
+              "time": "18:30",
+              "timeIndex": 0,
+              "weeks": "周日",
+              "value": null,
+              "displayColor": 0,
+              "ssoId": null,
+              "isToday": 0
+            }
+          ]
+        }
+      ],
+      "weeksTotal": 4,
+      "weeksNum": 3,
+      "weekList": [
+        {
+          "time": "11/05",
+          "timeIndex": 0,
+          "weeks": "周一",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 0
+        },
+        {
+          "time": "11/06",
+          "timeIndex": 0,
+          "weeks": "周二",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/07",
+          "timeIndex": 0,
+          "weeks": "周三",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/08",
+          "timeIndex": 0,
+          "weeks": "周四",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/09",
+          "timeIndex": 0,
+          "weeks": "周五",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/10",
+          "timeIndex": 0,
+          "weeks": "周六",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        },
+        {
+          "time": "11/11",
+          "timeIndex": 0,
+          "weeks": "周日",
+          "value": null,
+          "displayColor": 0,
+          "ssoId": null,
+          "isToday": 1
+        }
+      ],
+      "weekTotal": null,
+      "nickName": "teacher_lms",
+      "teachName": "jomy",
+      "ssoId": 123456,
+      "label": "111",
+      "channelName": "xcdcdd"
+    }
+  ],
+  "totals": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ]
+}

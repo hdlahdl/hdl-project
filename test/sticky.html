@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        article {
+            max-width: 600px;
+            margin: 1em auto;
+        }
+        article h4,
+        article footer {
+            position: -webkit-sticky;  /* for Safari */
+            position: sticky;
+        }
+        article h4 {
+            margin: 2em 0 0;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            top: 0;
+            z-index: 1;
+        }
+        article content {
+            display: block;
+            background-color: #ffffe0;
+            position: relative;
+            padding: 1px 10px;
+        }
+        article footer {
+            background-color: #f0f3f9;
+            padding: 10px;
+            bottom: 50vh;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <section>
+        <h4>text-shadow与文字的外描边效果</h4>
+        <content>
+            <p>基本效果达成，但是，实际上，并不是真正外描边效果，因为一个矩形四面投影的时候，四个角实际上会有空隙，这就导致方方正正的汉字最终的外描边效果显得比较的圆润，有点幼圆字体的感觉。如果设计师对外描边效果比较苛刻，可以使用-webkit-text-stroke描边文字和非描边文字相互重叠覆盖的方法模拟，技巧就在于-webkit-text-stroke描边文字的描边宽度要是要实现的外描边效果宽度的2倍。本文的第一个demo中的“重叠描边”实际上已经演示了如何操作，这里就不再展开啦！</p>
+        </content>
+        <footer>网友评论：...</footer>
+    </section>
+    <section>
+        <h4>-webkit-text-stroke与多重描边效果</h4>
+        <content>
+            <p>这个CSS声明组合可以让文字正体显示为背景模样，于是文字可以是渐变色或者甚至图案，再配合-webkit-text-stroke描边，文本的表现力又可以更上一层楼。
+对了，忘记告诉大家了，Firefox浏览器已经支持webkit-background-clip:text以及-webkit-text-fill-color属性了，也就是说，文字渐变效果在Firefox浏览器下页已经可以无压力实现，至于Edge 15，由于我身边并没有对应设备测试，所以并不确定结果，按照我的判断，应该也跟进支持了。希望有条件的小伙伴可以告知测试结果，我这里更新下，顺便帮你微博或者知乎挂了链接打个广告。 以上就是本文的全部内容，感谢阅读！</p>
+        </content>
+        <footer>网友评论：...</footer>
+    </section>
+    <section>
+        <h4>-webkit-text-stroke与多重描边效果</h4>
+        <content>
+            <p>这个CSS声明组合可以让文字正体显示为背景模样，于是文字可以是渐变色或者甚至图案，再配合-webkit-text-stroke描边，文本的表现力又可以更上一层楼。
+                对了，忘记告诉大家了，Firefox浏览器已经支持webkit-background-clip:text以及-webkit-text-fill-color属性了，也就是说，文字渐变效果在Firefox浏览器下页已经可以无压力实现，至于Edge 15，由于我身边并没有对应设备测试，所以并不确定结果，按照我的判断，应该也跟进支持了。希望有条件的小伙伴可以告知测试结果，我这里更新下，顺便帮你微博或者知乎挂了链接打个广告。 以上就是本文的全部内容，感谢阅读！</p>
+        </content>
+        <footer>网友评论：...</footer>
+    </section>
+    <section>
+        <h4>-webkit-text-stroke与多重描边效果</h4>
+        <content>
+            <p>这个CSS声明组合可以让文字正体显示为背景模样，于是文字可以是渐变色或者甚至图案，再配合-webkit-text-stroke描边，文本的表现力又可以更上一层楼。
+                对了，忘记告诉大家了，Firefox浏览器已经支持webkit-background-clip:text以及-webkit-text-fill-color属性了，也就是说，文字渐变效果在Firefox浏览器下页已经可以无压力实现，至于Edge 15，由于我身边并没有对应设备测试，所以并不确定结果，按照我的判断，应该也跟进支持了。希望有条件的小伙伴可以告知测试结果，我这里更新下，顺便帮你微博或者知乎挂了链接打个广告。 以上就是本文的全部内容，感谢阅读！</p>
+        </content>
+        <footer>网友评论：...</footer>
+    </section>
+</article>
+</body>
+</html>

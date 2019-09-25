@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.0.js"></script>
+</head>
+<body>
+<input type="text" id="inp">
+<input type="date" id="dat">
+<button onclick="rand()">click</button>
+<script>
+        function rand() {
+            var rand = "";
+            for(var i = 0; i < 3; i++){
+                var r = Math.floor(Math.random() * 10);
+                rand += r;
+            }
+            console.log(rand);
+            var inp=document.getElementById("inp");
+            inp.value=rand;
+        }
+        $("#dat").bind('input propertychange change', function() {
+            console.log($('#dat').val());
+        });
+</script>
+</body>
+</html>

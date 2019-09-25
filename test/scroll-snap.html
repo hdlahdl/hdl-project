@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .scroll{
+            width: 600px;
+            white-space: nowrap;
+            overflow: auto;
+        }
+        .scroll-x {
+            width: 600px;
+            scroll-snap-type: x mandatory;
+            white-space: nowrap;
+            overflow: auto;
+        }
+        .scroll-x img {
+            scroll-snap-align: start;
+        }
+        img{
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="scroll">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+</div>
+<div class="scroll-x">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+    <img src="img/66.jpg">
+</div>
+<a href="img/66.jpg" download="">down</a>
+<form action="">
+    <input type="text" required="required">
+    <button>提交</button>
+</form>
+
+</body>
+</html>

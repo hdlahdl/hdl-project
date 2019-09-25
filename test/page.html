@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分页</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+<div>
+    <table id="table" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+            <th>Item Operate</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<nav align="center" id="page_nav">
+    <ul class="pagination" id="page_prev">
+        <li id="prev">
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">«上一页</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="pagination" id="page_ul">
+    </ul>
+    <ul class="pagination" id="page_next">
+        <li id="next">
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">下一页»</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<script>
+    var pageTotal=0;//总页数 pages
+    var rowTotal=0;//总行数 total
+    var currentPage=0;//当前页数 pageNum
+    var startRow=0;//页开始行数
+    var endRow=0;//页结束行数
+    var pageSize=2;//每页行数   pageSize
+
+    function page(){
+        $.ajax({
+            url:"video/data.json",
+            type:"POST",
+            dataType:"json",
+            timeout:1000,
+            error:function(){
+                alert("ajax error");
+            },
+            success:function(data){
+                rowTotal=data.length;
+                pageTotal=Math.ceil(rowTotal/pageSize);//上取整
+                currentPage=1;
+
+                if(pageTotal==1){
+                    for(var i=0;i<pageSize;i++){
+                        $("#table tbody").append(
+                            $("<tr><td>"+
+                                data[i].name+
+                                "</td><td>"+
+                                data[i].stargazers_count+
+                                "</td><td>"+
+                                data[i].forks_count+
+                                "</td><td>"+
+                                data[i].description+
+                                "</td></tr>")
+                        );
+                    }
+                }else{
+                    for(var i=0;i<pageSize;i++){
+                        $("#table tbody").append(
+                            $("<tr><td>"+
+                                data[i].name+
+                                "</td><td>"+
+                                data[i].stargazers_count+
+                                "</td><td>"+
+                                data[i].forks_count+
+                                "</td><td>"+
+                                data[i].description+
+                                "</td></tr>")
+                        );
+                    }
+                    for(var i=1;i<pageTotal+1;i++){
+                        $("#page_ul").append(
+                            $("<li><a href='#'>"+i+"</a><li>")
+                        );
+                    }
+                }
+            }
+        });
+    }
+    //翻页
+    function gotoPage(pageNum){
+        $.ajax({
+            url:"video/data.json",
+            type:"POST",
+            dataType:"json",
+            timeout:1000,
+            error:function(){
+                alert("ajax error");
+            },
+            success:function(data){
+                currentPage=pageNum;
+                startRow=pageSize*(pageNum-1);
+                endRow=startRow+pageSize;
+                endRow=(rowTotal>endRow)?endRow:rowTotal;
+                $("#table tbody").empty();
+                for(var i=startRow;i<endRow;i++){
+                    $("#table tbody").append(
+                        $("<tr><td>"+
+                            data[i].name+
+                            "</td><td>"+
+                            data[i].stargazers_count+
+                            "</td><td>"+
+                            data[i].forks_count+
+                            "</td><td>"+
+                            data[i].description+
+                            "</td></tr>")
+                    );
+                }
+            }
+        });
+    }
+
+    $(function(){
+        page();
+            // $("#page_ul li").click(function(){
+            //     let pageNum=$(this).text();
+            //     gotoPage(pageNum);
+            // });
+        $(document).on("click","#page_ul li",function (){
+            let pageNum=$(this).text();
+            gotoPage(pageNum);
+        });
+        $("#page_prev li").click(function(){
+            if(currentPage==1){
+            }else{
+                gotoPage(--currentPage);
+            }
+        });
+        $("#page_next li").click(function(){
+            if(currentPage==pageTotal){
+            }else{
+                gotoPage(++currentPage);
+            }
+        })
+    });
+</script>
+</body>
+</html>

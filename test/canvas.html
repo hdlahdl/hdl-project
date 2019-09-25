@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+</head>
+<body>
+<canvas id="canvas1" width="800" height="600" style="background: seagreen"></canvas>
+<canvas id="test-canvas" width="300" height="200" style="background: pink"></canvas>
+
+<script>
+    var canvas=document.getElementById("test-canvas");
+    var ctx = canvas.getContext('2d');
+    // ctx.fillStyle="green";
+    // ctx.fillRect(10, 10, 130, 130);
+    //设置线宽
+    ctx.lineWidth=10;
+    //设置线的颜色
+    ctx.strokeStyle="green";
+
+    // ctx.beginPath(); //清空子路径，一般用于开始路径的创建
+
+    //将画笔移动到点moveTo
+    ctx.moveTo(40,20);
+    ctx.lineTo(40,100);
+    ctx.moveTo(40,60);
+    ctx.lineTo(80,60);
+    ctx.moveTo(80,20);
+    ctx.lineTo(80,100);
+    ctx.moveTo(100,20);
+    ctx.arc(100,60,40,0.5*Math.PI,1.5*Math.PI,true);
+    ctx.closePath();  //闭合
+    ctx.fillStyle="lightgreen";  //设置填充颜色
+    ctx.fill();  //执行填充
+    ctx.moveTo(160,20);
+    ctx.lineTo(160,100);
+    ctx.lineTo(200,100);
+    //执行画线
+    ctx.stroke();
+
+
+    //获得画布元素
+    var canvas1 = document.getElementById("canvas1");
+    //获得2维绘图的上下文
+    var ctx1 = canvas1.getContext("2d");
+    //设置线宽
+    ctx1.lineWidth = 10;
+    //设置线的颜色
+    ctx1.strokeStyle = "#fff";
+    canvas1.onmousemove=function(e){
+        //划线到当前客户端的x与y座标
+        ctx1.lineTo(e.clientX, e.clientY);
+        //执行画线
+        ctx1.stroke();
+    }
+
+</script>
+</body>
+</html>

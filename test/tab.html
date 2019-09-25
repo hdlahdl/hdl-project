@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab</title>
+    <script src="js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<style>
+    .active{
+        border-bottom: 2px solid red;
+    }
+    .content .selected{
+        display: block;
+    }
+    .content{
+        width: 500px;
+        height: 500px;
+        background: pink;
+    }
+    .tab{
+        display: none;
+    }
+    li{
+        list-style: none;
+        width: 65px;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+<div style="display: flex">
+    <div style="width: 300px">
+        <ul>
+            <li class="active">出勤情况</li>
+            <li>签单数据</li>
+            <li style="width: 40px;margin-left: 10px;">课表</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="tab selected">出勤情况</div>
+        <div class="tab">签单数据</div>
+        <div class="tab">课表</div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $("li").click(function(){
+            //给li添加下横线
+            $(this).addClass('active').siblings('li').removeClass('active');
+            var index = $(this).index();
+            //显示对应的div
+            $('.tab').eq(index).addClass('selected').siblings('div').removeClass('selected');
+        })
+    });
+
+</script>
+</body>
+</html>

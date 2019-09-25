@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+<div class="form-group">
+    <div class="col-xs-8" id="classBox1">
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 200px">班级名</th>
+                <th style="width: 100px">课次</th>
+                <th>
+                    <i class="fa fa-plus add"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="class1">
+            <tr>
+                <td><input type="text" style="width: 200px" class="className1" cname="123" ctype="456" cnick="789" lid="00"></td>
+                <td><input type="text" style="width: 100px" class="classTimes1" ></td>
+                <td style="width: 50px">
+                    <i class="fa fa-plus add"></i>
+                    <i class="fa fa-remove del"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-dismiss="modal" id="updateAbnormal">修 改</button>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+
+    $(document).on("click",".add",function (){
+        var text1='<tr>\
+                  <td><input type="text" style="width: 200px" class="className1" cname="" ctype="" cnick="" lid=""></td>\
+                  <td><input type="text" style="width: 100px" class="classTimes1" ></td>\
+                  <td style="width: 50px">\
+                      <i class="fa fa-plus add"></i>\
+                      <i class="fa fa-remove del"></i>\
+                  </td>\
+                  </tr>';
+        $("#class1").append(text1);
+    })
+    $("#updateAbnormal").click(function () {
+        let object = {};
+        let result = [];
+        let result2 = [];
+        $(".className1").each(function () {
+            object = {
+                classroomNick: $(this).attr("cnick"),
+                classroomType: $(this).attr("ctype"),
+                assistantName: $(this).attr("cname"),
+                classroomName: $(this).val(),
+                lessonId: $(this).attr("lid"),
+            };
+            result.push(object);
+        });
+        $(".classTimes1").each(function () {
+            result2.push($(this).val());
+        });
+        for (let i = 0; i < result.length; i++) {
+            result[i].lessonName=result2[i];
+        }
+        console.log(result2);
+        console.log(result)
+    })
+    var arr=[];
+    console.log(arr.length);
+
+    var anameArr=["1",2,3,4];
+    var aName=anameArr.join(",");
+    console.log(aName);
+    var bname="1234456";
+    console.log(bname.split(""))
+</script>
+</body>
+</html>

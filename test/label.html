@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <script src="js/jquery-1.11.0.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
+    <script src="js/bootstrap-tagsinput.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+    .container{
+        width: 80%;
+        margin-top: 100px;
+    }
+    .head-box{
+        margin-bottom: 20px;
+    }
+    .btn{
+        border-radius: 15px;
+        margin-top: 10px;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="head-box">
+            <div class="row">
+                <div class="col-md-6">
+                    标签：
+                    <input id="taginput" class="form-control" >
+                    <button type="button" class="btn btn-primary" style="margin: 0">Btn</button>
+                </div>
+            </div>
+        </div>
+</div>
+    <script>
+        $(function () {
+            $("#taginput").tagsinput()
+        })
+    </script>
+</body>
+</html>

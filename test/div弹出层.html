@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="js/tablesMergeCell.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="float:left;margin-top:5px;font-size:14px;margin-left:15%;">
+    学院
+    <a id="colleaguedaohang" target="_blank" ><img src="img/11.png" alt="">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function (){
+        var colleaguestring="<ul id='sss' style='width: 220px;top: 40px;'>"
+            +"<p>上课校区: <span>西</span></p>"
+            +"<p>上课时间: <span>9：00-12：00</span></p>"
+            +"<p>班主任: <span>张三</span></p>"
+            +"<p>科目: <span>math</span></p>"
+            +"<p>班级名称: <span>L1</span></p>"
+            +"</ul>";
+        $("#colleaguedaohang").popover({
+            trigger:'click',//manual 触发方式
+            placement : 'bottom',
+            title:'<div style="text-align:center; color:red; text-decoration:underline; font-size:14px;"> </div>',
+            html: 'true',
+            content : colleaguestring,  //这里可以直接写字符串，也可以是一个函数，该函数返回一个字符串；
+            animation: false
+        })
+    });
+</script>
+<!--"<ul id='sss' style='width: 220px;top: 40px;'>"-->
+    <!--+"<a style='margin-left:-20px;'></a>"-->
+    <!--+"<a id='09' href='javascript:void(0);'>  物理与电子信息学院</a>"-->
+    <!--+"<hr style='width:100%;border-top:1px solid #D5D5D5; margin-top: 2px;margin-left:-20px;'>"-->
+    <!--+"<a style='margin-left:-20px;'></a>"-->
+    <!--+"<a id='13' href='javascript:void(0);' >  建筑工程学院</a>"-->
+    <!--+"<hr style='width:100%;border-top:1px solid #D5D5D5; margin-top: 2px;margin-left:-20px;'>"-->
+    <!--+"<a style='margin-left:-20px;'></a>"-->
+    <!--+"<a id='07' href='javascript:void(0);'>  教育学院</a>"-->
+    <!--+"<hr style='width:100%;border-top:1px solid #D5D5D5; margin-top: 2px;margin-left:-20px;'>"-->
+    <!--+"<a style='margin-left:-20px;'></a>"-->
+    <!--+"<a id='01' href='javascript:void(0);'>  文学院</a>"-->
+    <!--+"<hr style='width:100%;border-top:1px solid #D5D5D5; margin-top: 2px;margin-left:-20px;'>"-->
+    <!--+"</ul>";-->
+</body>
+</html>

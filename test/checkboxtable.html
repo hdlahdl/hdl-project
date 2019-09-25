@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>table</title>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery-1.11.0.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+    .container {
+        width: 80%;
+        margin-top: 100px;
+    }
+
+    table > tr, th, td {
+        text-align: center;
+    }
+    .selected {
+        background: pink;
+    }
+
+</style>
+<body>
+<div class="container">
+    <table class="table table-bordered" id="tab">
+        <thead>
+        <tr>
+            <th></th>
+            <th><input type="checkbox" class="choose" >周一</th>
+            <th><input type="checkbox" class="choose" >周二</th>
+            <th><input type="checkbox" class="choose">周三</th>
+            <th><input type="checkbox" class="choose">周四</th>
+            <th><input type="checkbox" class="choose">周五</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>8：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>10：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>12：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>14：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>18：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>20：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>22：00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+<script>
+    // $("table tr").each(function() {    // 遍历每一行
+    //     $(this).children('td:eq(1)');  // td:eq(0)选择器表示第一个单元格
+    // });
+
+    // $(".choose").click(function(){
+
+
+    // })
+    function tabCell() {
+
+        $(".choose").click(function () {
+
+            var that = this;
+            a = this.parentNode.cellIndex;
+            console.log(a);
+            $("table tr").each(function () {
+                if($(that).is(':checked')) {
+                    $(this).find('td').eq(a).addClass('selected');
+                }else{
+                    $(this).find('td').eq(a).removeClass('selected');
+                }
+
+
+                // $(this).find('td').eq(a).css("background", "pink");
+            });
+
+        });
+        // $(".table").find("th").click(function(e) {
+        //
+        //     x=e.target.cellIndex;
+        //     //console.log(x);
+        //
+        //     $("table tr").each(function() {
+        //         $(this).find('td').eq(x).toggleClass('selected');
+        //     });
+        //     // console.log(e.target.cellIndex)
+        //     // $(this).children('td:eq(x)').toggleClass('selected');
+        // });
+
+        //添加单元格点击事件
+        $("#tab td").click(function () {
+            $(this).toggleClass('selected');
+        })
+
+        // var tab = document.getElementById('tab')
+        // var rows = tab.rows;
+        // var rlen = rows.length;
+        // for (var i = 1; i < rlen; i++) { //遍历所有行
+        //     var cells = rows[i].cells; //得到这一行的所有单元格
+        //     for (var j = 0; j < cells.length; j++) {
+        //         //给每一个单元格添加click事件
+        //         cells[j].onclick = function () {
+        //
+        //             $(this).toggleClass('selected');
+        //
+        //         }
+        //
+        //     }
+        // }
+    }
+
+    tabCell();
+
+</script>
+</body>
+</html>

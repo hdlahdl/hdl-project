@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.0.js"></script>
+</head>
+<body>
+<style>
+    #p{
+        color: #002a80 !important;
+    }
+    .parent {
+        background: #E7A1C5;
+    }
+    .parent .child {
+        background: #C8CDF5;
+        height: 100px;
+        margin-top: 100px;
+    }
+</style>
+<section class="parent">
+    <article class="child"></article>
+</section>
+
+<p id="p" style="color:#28a745">123</p>
+<button onclick="dj()">ww</button>
+<form action="">
+    数字<input type="number">
+    邮箱<input type="email">
+    手机号码<input type="tel">
+    url<input type="url">
+    range<input type="range">
+    search <input type="search" value="1111">
+    time <input type="time">
+    datetime <input type=/>
+    week <input type="week"/>
+    <input type="datetime-local">
+    <input type="submit" value="提交">
+
+</form>
+<!--<div style="border: 1px solid seagreen">-->
+    <!--<input type="date" id="startTime">-->
+    <!--<input type="date" id="endTime">-->
+<!--</div>-->
+<!--<div style="width: 500px;border: 1px solid seagreen;word-wrap: break-word">-->
+    <!--<b>Pneumon</b>-->
+    <!--<hr>-->
+    <!--<strong>oultram</strong>-->
+    <!--<hr>-->
+    <!--<em>icroscop</em>-->
+    <!--<hr>-->
+    <!--icsilicovolcanoconiosis-->
+    <!--66666666666666666666666666666666666666666666666-->
+    <!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
+    <!--**********************************-->
+    <!--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+    <!--单词的数量到底有多少谁也数不清楚,在这无数的单词中,有一群单词背称之为世界上最长的单词,它们最少的都是由27个字母组成的一个单词,最多的一个是由10...-->
+
+<!--</div>-->
+<!--<div style='max-width:200px;overflow:hidden; white-space:nowrap; text-overflow:ellipsis;border: 1px solid seagreen;'>-->
+    <!--单词的数量到底有多少谁也数不清楚,在这无数的单词中,有一群单词背称之为世界上最长的单词,它们最少的都是由27个字母组成的一个单词,最多的一个是由10-->
+<!--</div>-->
+<!--<ul>-->
+    <!--<li>1</li>-->
+    <!--<li>2</li>-->
+    <!--<li>3</li>-->
+<!--</ul>-->
+<script>
+    function dj(){
+        var p=document.getElementById("p");
+        p.style.color="#ff0011";
+        console.log(p)
+    }
+
+    function checkEndTime(){
+        var startTime=$("#startTime").val();
+        var start=new Date(startTime.replace("-", "/").replace("-", "/"));
+        var endTime=$("#endTime").val();
+        var end=new Date(endTime.replace("-", "/").replace("-", "/"));
+        console.log(start+"----"+end);
+        if(end<start){
+            console.log("时间错误!")
+            // return false;
+        }
+        return true;
+    }
+    $("input").on("change",function f() {
+        checkEndTime()
+    });
+
+    var str = 'asdfssaaasasasasaa';
+    var json = {};
+    for (var i = 0; i < str.length; i++) {
+        if(!json[str.charAt(i)]){
+            json[str.charAt(i)] = 1;
+        }else{
+            json[str.charAt(i)]++;
+        }
+    };
+    console.log(json);
+    var iMax = 0;
+    var iIndex = '';
+    for(var i in json){
+        console.log(i)
+        if(json[i]>iMax){
+            iMax = json[i];
+            iIndex = i;
+        }
+    }
+    var arr = [0,2,3,4,4,0,2];
+    console.log(arr.toString())
+    console.log(arr.join(","))
+    console.log(arr.toString()===arr.join(","));
+
+    var arr = [0,2,3,4,4,0,2];
+    var obj = {};
+    var tmp = [];
+    for(var i = 0 ;i< arr.length;i++){
+        if( !obj[arr[i]] ){
+            obj[arr[i]] = 1;
+            tmp.push(arr[i]);
+        }
+    }
+    console.log(obj)
+    console.log(tmp);
+
+    $("ul").delegate("li", "click", function(){ $(this).hide(); });
+
+
+    // $.ajax({
+    //     url: "", //需要请求的地址;
+    //     async:false, //是否同步;
+    //     cache:true, //是否缓存;
+    //     data: {}, //参数;
+    //     dataType: "json", //表示服务器返回的数据类型;
+    //     type: "get", //post/get
+    //     success: function (data) {  //表示成功回调函数
+    //
+    //     },
+    //     error: function () {
+    //         alert("异常！");
+    //     }
+    // })
+</script>
+
+</body>
+</html>

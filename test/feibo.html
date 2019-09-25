@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var timestamp4 = new Date(1549382400000);//直接用 new Date(时间戳) 格式转化获得当前时间
+    console.log(timestamp4);
+
+    // 获取某个时间格式的时间戳
+    var stringTime = "2019-02-06 01:00";
+    var timestamp2 = Date.parse(new Date(stringTime));
+    //2014-07-10 10:21:12的时间戳为：1404958872
+    console.log(timestamp2);
+    var nowTimestamp=new Date().getTime();
+    console.log(nowTimestamp)
+    // var y;
+    // var arr1=[1,1];
+    // var arr2=[1,1];
+    // function feibo(x){
+    //     if (arr1[0]+arr1[1]>x) {
+    //        return arr2;
+    //     }else{
+    //        y= arr1[0]+arr1[1];
+    //        console.log(y);
+    //        arr2.push(y);
+    //        arr1[0]=arr1[1];
+    //        arr1[1]=y;
+    //        feibo(x)
+    //     }
+    // }
+    // feibo(4000000);
+    // console.log(arr2);
+    // for (var i=0;i<arr2.length;i++){
+    //     if(arr2[i]%2===0){
+    //         arr2.splice(i,1);
+    //     }
+    // }
+    // console.log(arr2);
+    // var sum=0;
+    // arr2.forEach(function(val) {
+    //     sum += val;
+    // }, 0);
+    // console.log(sum)
+
+    // function getNthFibonacci(count) {
+    //     var count = count * 1, //如果为其他类型，则转int型
+    //         tailFactorial = function(curr, next, count) {
+    //             if (count === 0) {
+    //                 console.log(curr);
+    //                 return curr;
+    //             } else {
+    //                 return tailFactorial(next, curr + next, count - 1); //尾递归采用函数，可有效解决栈溢出问题
+    //             }
+    //         };
+    //     return tailFactorial(1, 1, count);
+    // }
+    // getNthFibonacci(5)
+
+</script>
+</body>
+</html>

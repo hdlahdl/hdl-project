@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BFC</title>
+</head>
+<body>
+<style>
+    #father{
+        background:#E7A1C5;
+        overflow: hidden;
+    }
+    #son{
+        height: 100px;
+        margin-top: 100px;
+        background: #C8CDF5;
+    }
+    #margin {
+        background: #E7A1C5;
+        overflow: hidden;
+        width: 300px;
+    }
+    #margin>p {
+        background: #C8CDF5;
+        margin: 20px auto 30px;
+    }
+</style>
+<div id="father">
+    <div id="son">
+
+    </div>
+</div>
+<section id="margin">
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+</section>
+<div>
+    <p style="background: pink">Content边界/内边界: content边界环绕在由该元素的宽和高决定的一个矩形上,这个尺寸通常由该元素渲染后的内容决定,这四个content边界组成的矩形框就是该元素的content box.
+        <img src="img/11.png" alt="" style="float: left;margin: 25px;border: 1px solid green">
+        Padding边界:padding边界环绕在该元素的padding区域的四周,顾名思义,填充背景色.如果padding的宽度为零,则padding边界与content边界重合.这四个padding边界组成的矩形就是该元素的padding box.
+
+        Border边界:border边界环绕在该元素的border区域的四周.如果border的宽度为零,则border边界与padding边界重合.这四个border边界组成的矩形就是该元素的border box.
+        Margin边界:margin边界环绕在该元素的margin区域的四周,如果margin的宽度为零,则margin边界与border边界重合.这四个margin边界组成的矩形就是该元素的margin box.
+        </p>
+
+</div>
+</body>
+</html>

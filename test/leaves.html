@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>待办事项</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <!--<link rel="stylesheet" type="text/css" href="https://base.donut.cn/static/common/css/common-adminlte.css"/>-->
+    <!--<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="/static/assets/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="/static/daterangepicker/daterangepicker.css"/>-->
+    <!--<link rel="stylesheet" href="/static/assets/css/kkpager_blue.css">-->
+    <!--<link rel="stylesheet" href="/static/assets/css/pagination.css">-->
+
+    <!--<link rel="stylesheet" href="/static/assets/css/ace-fonts.css" />-->
+    <!--<link rel="stylesheet" href="/static/assets/css/ace.min.css" id="main-ace-style" />-->
+    <!--<link rel="stylesheet" href="/static/assets/css/font-awesome.css">-->
+    <!--&lt;!&ndash;[if lte IE 9]>-->
+    <!--<link rel="stylesheet" href="/static/assets/css/ace-part2.min.css" />-->
+    <!--<![endif]&ndash;&gt;-->
+    <!--&lt;!&ndash;[if lte IE 9]>-->
+    <!--<link rel="stylesheet" href="/static/assets/css/ace-ie.min.css" />-->
+    <!--<![endif]&ndash;&gt;-->
+
+    <!--<link rel="stylesheet" href="/static/teacherschedule/laydate.css"/>-->
+    <!--<link rel="stylesheet" href="/static/assets/css/timePicker.css" />-->
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/daterangepicker.css"/>
+    <link rel="stylesheet" href="css/kkpager_blue.css">
+    <link rel="stylesheet" href="css/pagination.css">
+    <link rel="stylesheet" type="text/css" href="css/timePicker.css">
+    <link rel="stylesheet" href="css/bootstrap-select.min.css"/>
+</head>
+<body class="no-skin">
+<!-- #section:basics/navbar.layout -->
+<!--<#include "../home/header.ftl">-->
+<style>
+    body{
+        padding: 0 !important;
+    }
+    /*.btn{*/
+        /*border: 0 !important;*/
+        /*border-radius: 4px !important;*/
+    /*}*/
+    /*#timeBox input{*/
+        /*padding: 0 !important;*/
+        /*height: 26px ;*/
+    /*}*/
+    /*.col-xs-9 input{*/
+        /*padding: 0 !important;*/
+        /*height: 26px ;*/
+    /*}*/
+    /*textarea{*/
+        /*padding: 0 !important;*/
+    /*}*/
+    #myTab {
+        font-size: 20px;
+        height: 50px;
+    }
+    th, td {
+        text-align: center;
+        max-width: 400px;
+    }
+    #ustartTimeStr,#uendTimeStr,#astartTimeStr,#aendTimeStr{
+        width: 74px;
+    }
+</style>
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container" style="overflow: hidden;">
+    <!-- #section:basics/sidebar -->
+    <!--<#include "../home/left.ftl">-->
+    <div class="main-content">
+<div class="content" style="margin: 30px">
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#schedule" data-toggle="tab">待办事项</a>
+        </li>
+        <li id="unusual">
+            <a href="#classTime" data-toggle="tab">异常课次</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div id="schedule" class="tab-pane fade in active" style="padding: 20px">
+            <form class="form-inline" id="empty">
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <label class="control-label">类型：</label>
+                    <select class="form-control" id="leaveType">
+                        <option value="">全部</option>
+                        <option value="1">课前</option>
+                        <option value="2">课中</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <label class="control-label">异常类型：</label>
+                    <select class="form-control" id="abnormalType">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <label class="control-label">状态：</label>
+                    <select class="form-control" id="leaveStatus">
+                        <option value="">全部</option>
+                        <option value="1" selected>待确认</option>
+                        <option value="2">已通过</option>
+                        <option value="3">无效</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <label class="control-label">异常时段：</label>
+                    <div style="display: inline-block" id="applicationDate">
+                        <input type="text" class="form-control" id="applicationDateRange">
+                    </div>
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <label class="control-label">异常归属人：</label>
+                    <input type="text" class="form-control" id="people">
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0;">
+                    <input type="hidden" name="pageNum" id="pageNum" value="1"/>
+                    <input type="hidden" name="pageSize" id="pageSize" value="10"/>
+                    <a class="btn btn-primary" id="search">搜索</a>
+                    <a class="btn btn-default qx" style="margin:0 30px 0 10px">清空</a>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加记录</a>
+                </div>
+            </form>
+            <!--<div class="col-md-offset-9" style="position: relative;top:-35px">-->
+
+            <div id="scheduleTable" style="margin-top: 80px">
+
+            </div>
+            <div id="kkpager" style="margin-left:10%"></div>
+        </div>
+        <div id="classTime" class="tab-pane fade" style="padding: 20px">
+            <form id="my-form" class="form-inline">
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">班级名称：</label>
+                    <input type="text" class="form-control" id="classroomName" name="classroomName">
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">班级昵称：</label>
+                    <input type="text" class="form-control" id="classroomNick" name="classroomNick">
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">班主任：</label>
+                    <input type="text" class="form-control" id="assistantName1" name="assistantName">
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">异常归属人：</label>
+                    <input type="text" class="form-control" id="applicantName" name="applicantName">
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">异常归属类型：</label>
+                    <select class="form-control" id="unusualType" name="applyType">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">异常类型：</label>
+                    <select class="selectpicker" multiple id="switchType"></select>
+                    <!--<select class="form-control" id="switchType">-->
+                        <!--<option value="">全部</option>-->
+                    <!--</select>-->
+                    <input type="hidden"  id="cun" name="changeTypeName">
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">渠道：</label>
+                    <select class="form-control" id="channel" name="channel">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:10px 20px 0 0">
+                    <label class="control-label">影响时段：</label>
+                    <div style="display: inline-block" id="theClassTime">
+                        <input type="text" id="classDateRange" class="form-control" name="dateRange">
+                    </div>
+                </div>
+                <div class="form-group" style="margin:10px 30px 0 0">
+                    <a class="btn btn-primary" id="seek">搜索</a>
+                    <button class="btn btn-default" type="reset" style="margin:0 30px 0 10px" id="qk">清空</button>
+                    <a class="btn btn-primary" id="export">导出表格</a>
+                </div>
+            </form>
+            <div id="classTable" style="margin-top: 40px">
+
+            </div>
+            <div id="pagination_3" style="margin-left:10%"></div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 450px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">调课记录</h4>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-primary btn-block btn-lg" style="height: 60px;margin-bottom: 20px"
+                        data-toggle="modal" data-target="#leaveClass" data-dismiss="modal">课前请假
+                </button>
+                <button class="btn btn-primary btn-block btn-lg" style="height: 60px" data-toggle="modal"
+                        data-target="#abnormalClass" data-dismiss="modal">课中异常
+                </button>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 课前请假模态框（Modal） -->
+<div class="modal fade" id="leaveClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close qx" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" style="text-align: center">课前请假</h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin:0 20px">
+                    <form class="form-horizontal" id="leaveClassForm">
+                        <input type="hidden" value="1" id="uleaveType">
+                        <input type="hidden" value="1" id="uapplyType">
+                        <input type="hidden" value="1" id="uleaveStatus">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">类型：</label>
+                            <div class="col-xs-8">
+                                <select class="form-control" id="beforeType">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">老师：</label>
+                            <div class="col-xs-8">
+                                <a data-toggle="modal" data-target="#myModal2" class="classTeacher">选择</a>
+                                <input type="hidden" id='teacherId'/>
+                                <textarea id="teacherName" rows="3" cols="30" readonly="readonly" style="resize:none;
+                                text-align:left;border: 0;background-color: transparent;font-size:15px;width: 200px;
+                                height: 25px; margin-left: 15px;position: relative;top:8px"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">请假方式：</label>
+                            <div class="col-xs-8">
+                                <label class="control-label" style="margin:0 30px 0 0">
+                                    <input type="radio" name="leaveWay" value="1" id="hour" checked class="leaveRadio">按课时</label>
+                                <label class="control-label">
+                                    <input type="radio" name="leaveWay" value="2" id="day" class="leaveRadio">按天</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">请假时段：</label>
+                            <div class="col-xs-8" id="timeBox">
+                                <input type="date" id="uleaveDateStr">
+                                <input type="text" id="ustartTimeStr" readonly><span>-</span>
+                                <input type="text" id="uendTimeStr" readonly>
+                            </div>
+                            <div class="col-xs-1">
+                                <a class="btn btn-default" id="chaXun" style="margin-left: -40px;">确定</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">请假影响班级：</label>
+                            <div class="col-xs-9" id="classBox" style="max-height: 120px;overflow-y: auto;">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 200px">班级名</th>
+                                        <th style="width: 100px">课次</th>
+                                        <th>
+                                            <i class="fa fa-plus add"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="class">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">原因：</label>
+                            <div class="col-xs-8">
+                                <textarea rows="3" style="width:360px" id="uleaveReason" placeholder="请输入200字以内！"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">备注：</label>
+                            <div class="col-xs-8">
+                                <textarea rows="2" style="width:360px" id="uremark" placeholder="请输入200字以内！"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default qx" data-dismiss="modal">取 消</button>
+                <button type="button" class="btn btn-primary"  id="confirmLeave">确 定</button>
+                <button type="button" class="btn btn-primary"  id="updateLeave">修 改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 课中异常模态框（Modal） -->
+<div class="modal fade" id="abnormalClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close qx" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" style="text-align: center">课中异常</h4>
+            </div>
+            <div class="modal-body">
+                <div style="margin:0 20px">
+                    <form class="form-horizontal" id="abnormalClassForm">
+                        <input type="hidden" value="2" id="aleaveType">
+                        <input type="hidden" value="1" id="aleaveStatus">
+                        <input type="hidden" value="1" id="applyType">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">类型：</label>
+                            <div class="col-xs-4">
+                                <select class="form-control" id="classType">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4" id="charge">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">老师：</label>
+                            <div class="col-xs-8">
+                                <a data-toggle="modal" data-target="#myModal2" class="classTeacher">选择</a>
+                                <input type="hidden" id='teacherId1' name="applicant"/>
+                                <textarea id="teacherName1" rows="3" cols="30" readonly="readonly" style="resize:none;
+                                text-align:left;border: 0;background-color: transparent;font-size:15px;width: 200px;
+                                height: 25px; margin-left: 15px;position: relative;top:8px"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">班级选择：</label>
+                            <div class="col-xs-8">
+                                <a data-toggle="modal" data-target="#myModal3" class="chooseClass">选择</a>
+                                <input type="hidden" id='classId1'/>
+                                <textarea id="className1" rows="3" cols="30" readonly="readonly" style="resize:none;
+                                text-align:left;border: 0;background-color: transparent;font-size:15px;width: 290px;
+                                height: 25px; margin-left: 15px;position: relative;top:8px"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">上课时段：</label>
+                            <div class="col-xs-9">
+                                <input type="date" id="aleaveDateStr">
+                                <input type="text" id="astartTimeStr" readonly><span>-</span>
+                                <input type="text" id="aendTimeStr" readonly>
+                                <a class="btn btn-default" id="chaXun1">确定</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">影响班级：</label>
+                            <div class="col-xs-9" id="classBox1" style="max-height: 120px;overflow-y: auto;">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 200px">班级名</th>
+                                        <th style="width: 100px">课次</th>
+                                        <th>
+                                            <i class="fa fa-plus add"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="class1">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">原因：</label>
+                            <div class="col-xs-8">
+                                <textarea rows="3" style="width:360px" id="aleaveReason" placeholder="请输入200字以内！"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">备注：</label>
+                            <div class="col-xs-8">
+                                <textarea rows="2" style="width:360px" id="aremark" placeholder="请输入200字以内！"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default qx" data-dismiss="modal">取 消</button>
+                <button type="button" class="btn btn-primary"  id="confirmAbnormal">确 定</button>
+                <button type="button" class="btn btn-primary"  id="updateAbnormal">修 改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 班级老师模态框（Modal） -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close qx1" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2" style="text-align: center">选择老师</h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <form class="form-inline" id="teacherSearchForm">
+                        <div class="form-group">
+                            <label class="control-label">老师姓名：</label>
+                            <input type="text" class="form-control" id="nickName">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">用户名：</label>
+                            <input type="text" class="form-control" id="teachName">
+                        </div>
+                        <a class="btn btn-primary" id="sTeacher">查询</a>
+                    </form>
+                </div>
+                <div id="teacherSearchBox" style="height: 450px;margin-top: 20px">
+
+                </div>
+                <div id="pagination_6" style="margin-left: 10%"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmTeacher">确 定</button>
+                <button type="button" class="btn btn-default qx1" data-dismiss="modal">取 消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 选择班级模态框（Modal） -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width: 590px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close qx1" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel3" style="text-align: center">选择班级</h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <form class="form-inline" id="classSearchForm">
+                        <div class="form-group" style="margin-left: 100px;">
+                            <label class="control-label">班级名称：</label>
+                            <input type="text" class="form-control" id="sClassName">
+                        </div>
+                        <a class="btn btn-primary" id="sClass">查询</a>
+                    </form>
+                </div>
+                <div id="classSearchBox" style="height: 450px;margin-top: 20px">
+
+                </div>
+                <div id="pagination_1"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirmClass">确 定</button>
+                <button type="button" class="btn btn-default qx1" data-dismiss="modal">取 消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 审核模态框（Modal） -->
+<div class="modal fade" id="checkedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 450px">
+            <div class="modal-header">
+                <button type="button" class="close qx" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" style="text-align: center">审批</h4>
+            </div>
+            <div class="modal-body">
+                <textarea rows="4" style="width:420px" id="remark" placeholder="请输入200字以内！"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="pass"><i class="fa fa-check"></i>
+                    通 过</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="turn"><i class="fa fa-close"></i>
+                    驳 回</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 提示模态框（Modal） -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="top: 200px">
+        <div class="modal-content" style="max-width: 600px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" style="text-align: center">提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 id="ts" style="text-align: center"></h4>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--<script type="text/javascript" src="https://base.donut.cn/static/common/js/common-adminlte.js"></script>-->
+<!--<script src="/static/assets/js/jquery.min.js"></script>-->
+<!--<script src="/static/bootstrap/js/bootstrap.min.js"></script>-->
+<!--<script src="/static/daterangepicker/moment.min.js"></script>-->
+<!--<script src="/static/assets/js/ace-extra.min.js"></script>-->
+<!--<script src="/static/assets/js/html5shiv.min.js"></script>-->
+<!--<script src="/static/assets/js/respond.min.js"></script>-->
+<!--<script src="/static/daterangepicker/daterangepicker.js"></script>-->
+<!--<script src="/static/assets/js/bootstrap-datetimepicker.js"></script>-->
+
+
+<!--<script src="/static/assets/js/bootstrap-datetimepicker.fr.js"></script>-->
+<!--<script src="/static/assets/js/kkpager.js"></script>-->
+<!--<script src="/static/assets/js/kkpager.min.js"></script>-->
+<!--<script src="/static/assets/js/pagination.min.js"></script>-->
+<!--<script type="text/javascript" src="/static/assets/js/jquery-timepicker.js"></script>-->
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/daterangepicker.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<!--<script src="js/bootstrap-datetimepicker.fr.js"></script>-->
+<script src="js/kkpager.js"></script>
+<script src="js/kkpager.min.js"></script>
+<script src="js/pagination.min.js"></script>
+<script type="text/javascript" src="js/jquery-timepicker.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script>
+    $(function () {
+
+        $(".selectpicker").selectpicker({
+            noneSelectedText: '全部'
+        });
+        //日期插件
+        dateRange('#applicationDate', '#applicationDateRange');
+        dateRange('#theClassTime', '#classDateRange');
+
+        //获取异常类型下拉菜单
+        $.ajax({
+            url: "http://10.155.82.252:8080/dict/getBaseDictByType",
+            data: {
+                dictType: "errorType"
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $("#abnormalType").append("<option value='" + data[i].value + "'>" + data[i].name + "</option>");
+                    $("#switchType").append("<option value='" + data[i].value + "'>" + data[i].name + "</option>");
+                    if (data[i].subType === "teacher") {
+                        $("#beforeType").append("<option value='" + data[i].value + "'>" + data[i].name + "</option>");
+                    } else {
+                        $("#classType").append("<option value='" + data[i].value + "-" + data[i].remark + "'>" + data[i].name + "</option>");
+                    }
+                }
+                // var oldnumber = ["1","2"];
+                $('#switchType').selectpicker('val',"");
+                $('#switchType').selectpicker('refresh');
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+        //获取异常归属类型下拉菜单
+        $.ajax({
+            url: "http://10.155.82.252:8080/dict/getBaseDictByType",
+            data: {
+                dictType: "errorPerson"
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $("#unusualType").append("<option value='" + data[i].value + "'>" + data[i].name + "</option>");
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+        //获取渠道下拉菜单
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/channel",
+            data: {},
+            dataType: "json",
+            method: "get",
+            success: function (datas) {
+                var data=datas.data;
+                for (let i = 0; i < data.length; i++) {
+                    $("#channel").append("<option value='" + data[i].selectName + "'>" + data[i].selectName + "</option>");
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+        /*字数限制*/
+        $("textarea").on("input propertychange", function() {
+            var $this = $(this);
+            var text  = $this.val();
+            if (text.length > 200) {
+                $this.val(text.substring(0, 200));
+            }
+        });
+        show();
+        //时间选择
+        $("#ustartTimeStr").hunterTimePicker();
+        $("#uendTimeStr").hunterTimePicker();
+
+        $("#astartTimeStr").hunterTimePicker();
+        $("#aendTimeStr").hunterTimePicker();
+    });
+    // 待办事项页面
+    //显示scheduleTable
+    function show() {
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/getLeaveListPage",
+            data: {
+                pageNum: $("#pageNum").val(),
+                pageSize: $("#pageSize").val(),
+                dateRange: $("#applicationDateRange").val(),
+                leaveType: $("#leaveType").val(),
+                changeType: $("#abnormalType").val(),
+                leaveStatus: $("#leaveStatus").val(),
+                applicantName:$("#people").val()
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                if (data.total < 1) {
+                    $('#scheduleTable').html("<h3 class='text-center'>未查询到匹配数据</h3>");
+                    $("#kkpager").empty();
+                    return;
+                }
+                var html = '<table class="table table-bordered">\
+                        <thead>\
+                            <tr class="info">\
+                            <th>异常归属人</th>\
+                            <th>异常归属类型</th>\
+                            <th>申请类型</th>\
+                            <th>异常类型</th>\
+                            <th>异常时段</th>\
+                            <th>影响班级</th>\
+                            <th>原因</th>\
+                            <th>申请人</th>\
+                            <th>申请时间</th>\
+                            <th>最后操作人</th>\
+                            <th>最后操作时间</th>\
+                            <th>状态</th>\
+                            <th>操作</th>\
+                            </tr>\
+                      </thead>\
+                      <tbody>';
+                for (let i = 0; i < data.list.length; i++) {
+                    var atime = (formatDate(data.list[i].createTime));
+                    html += '<tr id="' + data.list[i].id + '">\
+                             <td>' + data.list[i].applicantName + '</td>';
+                    if (data.list[i].applyType === 1) {
+                        html += '<td>老师</td>'
+                    } else if (data.list[i].applyType === 2) {
+                        html += '<td>系统</td>'
+                    } else {
+                        html += '<td>学生</td>'
+                    }
+                    if (data.list[i].leaveType === 1) {
+                        html += '<td>课前</td>'
+                    } else {
+                        html += '<td>课中</td>'
+                    }
+                    var utime = (formatDate(data.list[i].updateTime));
+                    html += '<td>' + data.list[i].changeTypeName + '</td>\
+                             <td>' + data.list[i].dayTime + '</td>\
+                             <td>' + data.list[i].classrooms + '</td>';
+                    if(data.list[i].leaveReason===null){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].leaveReason + '</td>'
+                    }
+                    if(data.list[i].createUser===null){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].createUser + '</td>'
+                    }
+                    html += '<td>' + atime + '</td>';
+                    if(data.list[i].updateUser===null){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].updateUser + '</td>'
+                    }
+                    html +='<td>' + utime + '</td>';
+                    if (data.list[i].leaveStatus === 1) {
+                        html += '<td>待确认</td>'
+                    } else if (data.list[i].leaveStatus === 2) {
+                        html += '<td>已通过</td>'
+                    } else {
+                        html += '<td>无效</td>'
+                    }
+                    //设为无效时间判断
+                    var jTimestamp;
+                    if (data.list[i].startTime ===null){
+                        jTimestamp=data.list[i].leaveEnd;
+                    }else{
+                        var stringTime = data.list[i].dayTime.split("~")[0];
+                        jTimestamp = Date.parse(new Date(stringTime));
+                    }
+                    //获取当前时间戳
+                    var nowTimestamp=new Date().getTime();
+                    var sign;
+                    if (jTimestamp-nowTimestamp>0){
+                        sign=true;
+                    } else {
+                        sign=false;
+                    }
+                    if (data.list[i].leaveStatus === 1) {
+                        if (data.list[i].leaveType === 1) {
+                            html += '<td>\
+                                        <a href="#" data-toggle="modal" data-target="#leaveClass" id="uLeave">编辑 </a>\
+                                        <a href="#" data-toggle="modal" data-target="#checkedModal" class="check">审核</a>\
+                                      </td>'
+                        } else {
+                            html += '<td>\
+                                        <a href="#" data-toggle="modal" data-target="#abnormalClass" id="aLeave">编辑 </a>\
+                                        <a href="#" data-toggle="modal" data-target="#checkedModal" class="check">审核</a>\
+                                      </td>'
+                        }
+                    }else if (data.list[i].leaveStatus === 2){
+                        if (data.list[i].leaveType === 1 && sign===true) {
+                            html += '<td>\
+                                        <a href="#" id="setInvalid">设为无效</a>\
+                                      </td>'
+                        }else {
+                            html += '<td></td>'
+                        }
+                    }else {
+                        html += '<td></td>'
+                    }
+                    html += '</tr>';
+                }
+                html += '</tbody></table>';
+                $("#scheduleTable").html(html);
+                //分页
+                kkpager.generPageHtml({
+                    mode: 'click',                //设置为点击时间，非跳转页面
+                    pno: data.pageNum,   //当前页
+                    total: data.pages,   //总页数
+                    totalRecords: data.total, //数据总条数
+                    isShowTotalRecords: true,     //是否显示数据总条数（这里因为默认不显示，所以进行设置）
+                    click: function (n) {
+                        getOtherList(n);     //点击按钮  会触发下面的方法getOtherStudentList
+                        this.selectPage(n);
+                        return false;
+                    }
+                }, true);
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    /*点击分页查询当前页数据*/
+    function getOtherList(n) {
+        $("#pageNum").val(n);
+        show();
+    }
+    //待办事项搜索
+    $("#search").click(function () {
+        show();
+    });
+    $(".btn-lg").click(function () {
+        $("#updateLeave").hide();
+        $("#updateAbnormal").hide();
+        qj()
+    });
+    //获取班级老师模态框内容
+    function getTeacher(currPage, pageSize) {
+        $.ajax({
+            url: "http://10.155.82.252:8080/teach/getTeachListPage",
+            data: {
+                nickName: $("#nickName").val(),
+                teachName: $("#teachName").val(),
+                pageNum: currPage,
+                pageSize: pageSize
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                var html = '<table class="table table-bordered">\
+                        <thead>\
+                            <tr class="info">\
+                            <th>选择</th>\
+                            <th>老师名称</th>\
+                            <th>用户名</th>\
+                            <th>渠道</th>\
+                            <th>标签</th>\
+                            </tr>\
+                      </thead>\
+                      <tbody>';
+                for (let i = 0; i < data.list.length; i++) {
+                    html += '<tr>\
+                             <td id="radio-' + data.list[i].ssoId + '"><input type="radio" value="' + data.list[i].ssoId + '" name="teacherId-radio"/></td>\
+                             <td id="td-teacherName' + data.list[i].ssoId + '">' + data.list[i].nickName + '</td>\
+                             <td>' + data.list[i].teachName + '</td>\
+                             <td>' + data.list[i].channelName + '</td>';
+                    if (data.list[i].label !== null) {
+                        html += '<td>' + data.list[i].label + '</td>'
+                    } else {
+                        html += '<td></td>'
+                    }
+                    html += '</tr>';
+                }
+                html += '</tbody></table>';
+                $("#teacherSearchBox").html(html);
+                //设置分页插件显示
+                $("#pagination_6").whjPaging("setPage", {
+                    currPage: data.pageNum,
+                    totalPage: data.pages,
+                    totalSize: data.total
+                });
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    $("#pagination_6").whjPaging({
+        //设为true时，ajax里的success函数必须调用setPage方法，否则分页插件显示保持不变
+        isResetPage: true,
+        isShowRefresh: false,
+        isShowSkip: false,
+        isShowPageSizeOpt: false,
+        callBack: function (currPage) {
+            getTeacher(currPage, 10)
+        }
+    });
+    //显示班级老师
+    $(".classTeacher").click(function () {
+        getTeacher(1, 10);
+    });
+    //查询老师
+    $("#sTeacher").click(function () {
+        getTeacher(1, 10);
+    });
+    //选择老师显示
+    $("#confirmTeacher").click(function () {
+        var teacherId = $('input[name="teacherId-radio"]:checked').val();
+        $("#teacherId").val(teacherId);
+        $("#teacherName").val($('#td-teacherName' + teacherId).text());
+        $("#teacherId1").val(teacherId);
+        $("#teacherName1").val($('#td-teacherName' + teacherId).text());
+        $('#teacherSearchForm')[0].reset();
+        $("#class").empty();
+        $("#class1").empty();
+    });
+    //获取班级模态框内容
+    function getClass(currPage, pageSize) {
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/selectDonutListByName.do",
+            data: {
+                name: $("#sClassName").val(),
+                pageNum: currPage,
+                pageSize: pageSize
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                var html = '<table class="table table-bordered">\
+                        <thead>\
+                            <tr class="info">\
+                            <th>选择</th>\
+                            <th>班级名称</th>\
+                            </tr>\
+                      </thead>\
+                      <tbody>';
+                for (let i = 0; i < data.list.length; i++) {
+                    html += '<tr>\
+                              <td id="radio-' + data.list[i].id + '">\
+                               <input type="radio" value="' + data.list[i].id + '" name="classId-radio"/></td>\
+                              <td id="td-className' + data.list[i].id + '">' + data.list[i].name + '</td>\
+                            </tr>';
+                }
+                html += '</tbody></table>';
+                $("#classSearchBox").html(html);
+                //设置分页插件显示
+                $("#pagination_1").whjPaging("setPage", {
+                    currPage: data.pageNum,
+                    totalPage: data.pages,
+                    totalSize: data.total
+                });
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    $("#pagination_1").whjPaging({
+        //设为true时，ajax里的success函数必须调用setPage方法，否则分页插件显示保持不变
+        isResetPage: true,
+        isShowRefresh: false,
+        isShowSkip: false,
+        isShowPageSizeOpt: false,
+        callBack: function (currPage) {
+            getClass(currPage, 10)
+        }
+    });
+    //显示班级
+    $(".chooseClass").click(function () {
+        getClass(1, 10);
+    });
+    //查询班级
+    $("#sClass").click(function () {
+        getClass(1, 10);
+    });
+    //选择班级
+    $("#confirmClass").click(function () {
+        var classId = $('input[name="classId-radio"]:checked').val();
+        $("#classId1").val(classId);
+        $("#className1").val($('#td-className' + classId).text());
+        $("#classSearchForm")[0].reset();
+        $("#class1").empty();
+    });
+
+    //课前请假查询
+    $("#chaXun").click(function () {
+        var arr=[],arr1=[],arr2=[];
+        $(".className").each(function () {
+            arr1.push($(this).val());
+        });
+        $(".classTimes").each(function () {
+            arr2.push($(this).val());
+        });
+        for (let a=0;a<arr1.length;a++) {
+            arr.push(arr1[a]+arr2[a]);
+        }
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/queryAffectedLesson.do",
+            data: {
+                day: $("#uleaveDateStr").val(),
+                endDay:$("#uleaveEndStr").val(),
+                startTime: $("#ustartTimeStr").val(),
+                endTime: $("#uendTimeStr").val(),
+                classroomId: "",
+                teacherId: $("#teacherId").val(),
+            },
+            dataType: "json",
+            method: "get",
+            success: function (datas) {
+                let data=datas.data;
+                if (data===null) {
+                    alert(datas.message);
+                }else if (data.length===0){
+                    alert("没有查询到影响班级数据，请手动输入！")
+                }else{
+                    if (arr.length === 0) {
+                        let text='';
+                        for (let i=0;i<data.length;i++){
+                            var aName=data[i].assistantNames.join(",");
+                            var ltext=(data[i].seq)+1+"/"+data[i].reverseNum;
+                            text += '<tr>\
+                                       <td>\
+                                       <input type="text" style="width: 200px" class="className" cnick="'+polishData(data[i].classroomNickname)+'" ctype="'+polishData(data[i].type)+'" lid="'+data[i].lessonId+'" aname="'+aName+'" tname="'+polishData(data[i].teacherName)+'" value="'+data[i].classroomName+'"></td>\
+                                       <td><input type="text" style="width: 100px" class="classTimes" value="'+ltext+'"></td>\
+                                       <td style="width: 50px">\
+                                          <i class="fa fa-plus add"></i>\
+                                          <i class="fa fa-remove del"></i>\
+                                       </td>\
+                                      </tr>';
+                        }
+                        $("#class").append(text);
+                    }else{
+                        var arr3=[];
+                        for (let j=0;j<data.length;j++){
+                            let ltext=(data[j].seq)+1+"/"+data[j].reverseNum;
+                            let vtext=data[j].classroomName+ltext;
+                            arr3.push(vtext);
+                        }
+                        for (let i=0;i<data.length;i++) {
+                            if (arr.indexOf(arr3[i]) === -1) {
+                                var aName=data[i].assistantNames.join(",");
+                                let ltext=(data[i].seq)+1+"/"+data[i].reverseNum;
+                                let text= '<tr>\
+                                            <td>\
+                                            <input type="text" style="width: 200px" class="className" cnick="'+polishData(data[i].classroomNickname)+'" ctype="'+polishData(data[i].type)+'" lid="'+data[i].lessonId+'" aname="'+aName+'" tname="'+polishData(data[i].teacherName)+'" value="'+data[i].classroomName+'"></td>\
+                                            <td><input type="text" style="width: 100px" class="classTimes" value="'+ltext+'"></td>\
+                                            <td style="width: 50px">\
+                                            <i class="fa fa-plus add"></i>\
+                                            <i class="fa fa-remove del"></i>\
+                                            </td>\
+                                           </tr>';
+                                $("#class").append(text);
+                            }
+                        }
+                    }
+                }
+            },
+            error: function (result) {
+                alert(result.message);
+            }
+        });
+    });
+
+    //课中异常查询
+    $("#chaXun1").click(function () {
+        var arr=[],arr1=[],arr2=[];
+        $(".className1").each(function () {
+            arr1.push($(this).val());
+        });
+        $(".classTimes1").each(function () {
+            arr2.push($(this).val());
+        });
+        for (let a=0;a<arr1.length;a++) {
+            arr.push(arr1[a]+arr2[a]);
+        }
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/queryAffectedLesson.do",
+            data: {
+                day: $("#aleaveDateStr").val(),
+                startTime: $("#astartTimeStr").val(),
+                endTime: $("#aendTimeStr").val(),
+                classroomId: $("#classId").val(),
+                teacherId: $("#teacherId1").val(),
+            },
+            dataType: "json",
+            method: "get",
+            success: function (datas) {
+                let data=datas.data;
+                if (data===null) {
+                    alert(datas.message);
+                }else if (data.length===0){
+                    alert("没有查询到影响班级数据，请手动输入！")
+                }else{
+                    if (arr.length === 0) {
+                        let text='';
+                        for (let i=0;i<data.length;i++){
+                            var aName=data[i].assistantNames.join(",");
+                            var ltext=(data[i].seq)+1+"/"+data[i].reverseNum;
+                            text += '<tr>\
+                                       <td>\
+                                       <input type="text" style="width: 200px" class="className1" cnick="'+polishData(data[i].classroomNickname)+'" ctype="'+polishData(data[i].type)+'" lid="'+data[i].lessonId+'" aname="'+aName+'" tname="'+polishData(data[i].teacherName)+'" value="'+data[i].classroomName+'"></td>\
+                                       <td><input type="text" style="width: 100px" class="classTimes1" value="'+ltext+'"></td>\
+                                       <td style="width: 50px">\
+                                          <i class="fa fa-plus add"></i>\
+                                          <i class="fa fa-remove del"></i>\
+                                       </td>\
+                                      </tr>';
+                        }
+                        $("#class1").append(text);
+                    }else{
+                        var arr3=[];
+                        for (let j=0;j<data.length;j++){
+                            let ltext=(data[j].seq)+1+"/"+data[j].reverseNum;
+                            let vtext=data[j].classroomName+ltext;
+                            arr3.push(vtext);
+                        }
+                        for (let i=0;i<data.length;i++) {
+                            if (arr.indexOf(arr3[i]) === -1) {
+                                let aName=data[i].assistantNames.join(",");
+                                let ltext=(data[i].seq)+1+"/"+data[i].reverseNum;
+                                let text= '<tr>\
+                                             <td>\
+                                             <input type="text" style="width: 200px" class="className1" cnick="'+polishData(data[i].classroomNickname)+'" ctype="'+polishData(data[i].type)+'" lid="'+data[i].lessonId+'" aname="'+aName+'" tname="'+polishData(data[i].teacherName)+'" value="'+data[i].classroomName+'"></td>\
+                                              <td><input type="text" style="width: 100px" class="classTimes1" value="'+ltext+'"></td>\
+                                              <td style="width: 50px">\
+                                              <i class="fa fa-plus add"></i>\
+                                              <i class="fa fa-remove del"></i>\
+                                              </td>\
+                                            </tr>';
+                                $("#class1").append(text);
+                            }
+                        }
+                    }
+                }
+            },
+            error: function (result) {
+                alert(result.message);
+            }
+        });
+    });
+    //请假方式切换
+    $(".leaveRadio").click(function () {
+        qj();
+    });
+    function qj(){
+        var flag=$("input[name='leaveWay']:checked").val();
+        var html1='<input type="date" id="uleaveDateStr">\
+                      <input type="text" id="ustartTimeStr" readonly><span>-</span>\
+                      <input type="text" id="uendTimeStr" readonly>';
+        var html2='<input type="date" id="uleaveDateStr"><span>-</span>\
+                      <input type="date" id="uleaveEndStr">';
+        if (flag ==="1"){
+            $("#timeBox").html(html1);
+            $("#class").empty();
+        }else if (flag ==="2"){
+            $("#timeBox").html(html2);
+            $("#class").empty();
+        }
+        //时间选择
+        $("#ustartTimeStr").hunterTimePicker();
+        $("#uendTimeStr").hunterTimePicker();
+    }
+    //新增课前请假
+    $("#confirmLeave").click(function () {
+        $("#teacherName1").val("");
+        let object = {};
+        let result = [];
+        let result2 = [];
+        $(".className").each(function () {
+            object = {
+                classroomName: $(this).val(),
+                classroomNick: $(this).attr("cnick"),
+                classroomType: $(this).attr("ctype"),
+                lessonId: $(this).attr("lid"),
+                assistantName: $(this).attr("aname"),
+                teacherName: $(this).attr("tname")
+            };
+            result.push(object);
+        });
+        $(".classTimes").each(function () {
+            result2.push($(this).val());
+        });
+        for (let i = 0; i < result.length; i++) {
+            result[i].lessonName=result2[i];
+        }
+        if ($("input[name='leaveWay']:checked").val()==="1"){
+            $("#uleaveEndStr").val("");
+        } else{
+            $("#ustartTimeStr").val("");
+            $("#uendTimeStr").val("")
+        }
+        if($("input[name='leaveWay']:checked").val()==="1"){
+            if ($("#beforeType").val()==="" || $("#teacherId").val()==="" || $("#uleaveDateStr").val()==="" || $("#ustartTimeStr").val()==="" || $("#uendTimeStr").val()==="" || $("#uleaveReason").val()==="") {
+                $("#ts").html("请将请假信息输入完整后请假！");
+                $("#Modal").modal('show');
+            } else{
+                if ($("#ustartTimeStr").val()>=$("#uendTimeStr").val()) {
+                    $("#ts").html("请将请假时段填写正确后请假！");
+                    $("#Modal").modal('show');
+                }else{
+                    leave(result);
+                    $('#leaveClass').modal('hide')
+                }
+            }
+        }else if($("input[name='leaveWay']:checked").val()==="2"){
+            if ($("#beforeType").val()==="" || $("#teacherId").val()==="" || $("#uleaveDateStr").val()==="" || $("#uleaveEndStr").val()==="" || $("#uleaveReason").val()==="") {
+                $("#ts").html("请将请假信息输入完整后请假！");
+                $("#Modal").modal('show');
+            } else{
+                var start=new Date($("#uleaveDateStr").val().replace("-", "/").replace("-", "/"));
+                var end=new Date($("#uleaveEndStr").val().replace("-", "/").replace("-", "/"));
+                if(end<start){
+                    $("#ts").html("请将请假时段填写正确后请假！");
+                    $("#Modal").modal('show');
+                }else{
+                    leave(result);
+                    $('#leaveClass').modal('hide')
+                }
+            }
+        }
+    });
+    function leave(result){
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/addLeave.do",
+            data: {
+                applyMode:$("input[name='leaveWay']:checked").val(),
+                leaveType: $("#uleaveType").val(),
+                applyType: $("#uapplyType").val(),
+                leaveStatus: $("#uleaveStatus").val(),
+                changeType: $("#beforeType").val(),
+                applicant: $("#teacherId").val(),
+                leaveDateStr: $("#uleaveDateStr").val(),
+                leaveEndStr:$("#uleaveEndStr").val(),
+                startTimeStr: $("#ustartTimeStr").val(),
+                endTimeStr: $("#uendTimeStr").val(),
+                leaveReason: $("#uleaveReason").val(),
+                remark: $("#uremark").val(),
+                leaveLessonListStr: JSON.stringify(result)
+            },
+            dataType: "json",
+            method: "post",
+            success: function (data) {
+                if (data.result == 600000) {
+                    alert("新增成功！");
+                    $('#leaveClassForm')[0].reset();
+                    $("#class").empty();
+                    show();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+    //扣款比例
+    $("select#classType").change(function(){
+        if ($(this).val() ==="8-1") {
+            var html='<select class="form-control" id="ratio">\
+                       <option value="">请选择扣款比例</option>\
+                       <option value="0">0%</option>\
+                       <option value="50">50%</option>\
+                       <option value="100">100%</option>\
+                      </select>';
+            $("#charge").html(html);
+        }else{
+            $("#charge").empty();
+        }
+    });
+
+    //新增课中异常
+    $("#confirmAbnormal").click(function () {
+
+        var reasonText;
+        if ($("#ratio").val() !== undefined && $("#ratio").val() !=="" ){
+            reasonText=$("#aleaveReason").val()+"("+$("#ratio").find("option:selected").text()+"扣款)"
+        } else{
+            reasonText=$("#aleaveReason").val()
+        }
+
+        $("#teacherName").val("");
+        var type = $("#classType").val();
+        var type1 = type.split("-");
+        var cType = type1[0];
+        var aType = type1[1];
+        $("#applyType").val(aType);
+        let object = {};
+        let result = [];
+        let result2 = [];
+        $(".className1").each(function () {
+            object = {
+                classroomName: $(this).val(),
+                classroomNick: $(this).attr("cnick"),
+                classroomType: $(this).attr("ctype"),
+                lessonId: $(this).attr("lid"),
+                assistantName: $(this).attr("aname"),
+                teacherName: $(this).attr("tname")
+            };
+            result.push(object);
+        });
+        $(".classTimes1").each(function () {
+            result2.push($(this).val());
+        });
+        for (let i = 0; i < result.length; i++) {
+            result[i].lessonName=result2[i];
+        }
+        if ($("#classType").val()==="" || $("#teacherId1").val()==="" || $("#aleaveDateStr").val()==="" || $("#astartTimeStr").val()==="" || $("#aendTimeStr").val()==="" || $("#aleaveReason").val()==="") {
+            $("#ts").html("请将异常信息输入完整后添加！");
+            $("#Modal").modal('show');
+        } else{
+            if ($("#astartTimeStr").val()>=$("#aendTimeStr").val()) {
+                $("#ts").html("请将上课时段填写正确后添加！");
+                $("#Modal").modal('show');
+            }else{
+                $.ajax({
+                    url: "http://10.155.82.252:8080/leaves/addLeave.do",
+                    data: {
+                        applicant:$("#teacherId1").val(),
+                        classroomName:$("#className1").val(),
+                        applyType: $("#applyType").val(),
+                        leaveType: $("#aleaveType").val(),
+                        changeType: cType,
+                        leaveStatus: $("#aleaveStatus").val(),
+                        leaveDateStr: $("#aleaveDateStr").val(),
+                        startTimeStr: $("#astartTimeStr").val(),
+                        endTimeStr: $("#aendTimeStr").val(),
+                        leaveReason: reasonText,
+                        remark: $("#aremark").val(),
+                        deduction:$("#ratio").val(),
+                        leaveLessonListStr: JSON.stringify(result)
+                    },
+                    dataType: "json",
+                    method: "get",
+                    success: function (data) {
+                        if (data.result == 600000) {
+                            alert("新增成功！");
+                            $('#abnormalClassForm')[0].reset();
+                            $("#class1").empty();
+                            $("#charge").empty();
+                            show();
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("异常！");
+                    }
+                });
+                $('#abnormalClass').modal('hide')
+            }
+        }
+    });
+
+    //修改课前请假
+    var lid = '';
+    $(document).on("click", "#uLeave", function () {
+        $("#updateLeave").show();
+        $("#confirmLeave").hide();
+        lid = $(this).parent("td").parent("tr").attr("id");
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/getLeaveById.do",
+            data: {
+                id: lid,
+            },
+            method: 'post',
+            dataType: 'json',
+            success: function (result) {
+                var data = result.data;
+                if (data.applyMode === 1){
+                    $("input[name='leaveWay'][value='1']").prop('checked',true);
+                    var html1='<input type="date" id="uleaveDateStr">\
+                      <input type="text" id="ustartTimeStr" readonly><span>-</span>\
+                      <input type="text" id="uendTimeStr" readonly>';
+                    $("#timeBox").html(html1);
+                }else if (data.applyMode === 2){
+                    $("input[name='leaveWay'][value='2']").prop('checked',true);
+                    var html2='<input type="date" id="uleaveDateStr"><span>-</span>\
+                               <input type="date" id="uleaveEndStr">';
+                    $("#timeBox").html(html2);
+                }
+                $("#beforeType").val(data.changeType);
+                $("#teacherName").val(data.applicantName);
+                $("#teacherId").val(data.applicant);
+                $("#uleaveDateStr").val(data.leaveDateStr);
+                $("#uleaveEndStr").val(data.leaveEndStr);
+                $("#ustartTimeStr").val(data.startTimeStr);
+                $("#uendTimeStr").val(data.endTimeStr);
+                $("#uleaveReason").val(data.leaveReason);
+                $("#uremark").val(data.remark);
+                var list = data.leaveLessonList;
+                $("#class").empty();
+                for (let i = 0; i < list.length; i++) {
+                    var html = '<tr>\
+                            <td><input type="text" style="width: 200px" class="className" value="' + list[i].classroomName + '" cnick="'+polishData(list[i].classroomNickname)+'" ctype="'+polishData(list[i].classroomType)+'" lid="'+list[i].lessonId+'" aname="'+list[i].assistantName+'" tname="'+polishData(list[i].teacherName)+'"></td>\
+                            <td><input type="text" style="width: 100px" class="classTimes" value="' + list[i].lessonName + '"></td>\
+                            <td style="width: 50px">\
+                            <i class="fa fa-plus add"></i>\
+                            <i class="fa fa-remove del"></i>\
+                            </td>\
+                            </tr>';
+                    $("#class").append(html);
+                }
+                //时间选择
+                $("#ustartTimeStr").hunterTimePicker();
+                $("#uendTimeStr").hunterTimePicker();
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    });
+    $("#updateLeave").click(function () {
+        $("#teacherName1").val("");
+        let object = {};
+        let result = [];
+        let result2 = [];
+        $(".className").each(function () {
+            object = {
+                classroomName: $(this).val(),
+                classroomNick: $(this).attr("cnick"),
+                classroomType: $(this).attr("ctype"),
+                lessonId: $(this).attr("lid"),
+                assistantName: $(this).attr("aname"),
+                teacherName: $(this).attr("tname")
+            };
+            result.push(object);
+        });
+        $(".classTimes").each(function () {
+            result2.push($(this).val());
+        });
+        for (let i = 0; i < result.length; i++) {
+            result[i].lessonName=result2[i];
+        }
+        if($("input[name='leaveWay']:checked").val()==="1"){
+            if ($("#beforeType").val()==="" || $("#teacherId").val()==="" || $("#uleaveDateStr").val()==="" || $("#ustartTimeStr").val()==="" || $("#uendTimeStr").val()==="" || $("#uleaveReason").val()==="") {
+                $("#ts").html("请将请假信息输入完整后请假！");
+                $("#Modal").modal('show');
+            } else{
+                if ($("#ustartTimeStr").val()>=$("#uendTimeStr").val()) {
+                    $("#ts").html("请将请假时段填写正确后请假！");
+                    $("#Modal").modal('show');
+                }else{
+                    updateLeaves(result);
+                    $('#leaveClass').modal('hide')
+                }
+            }
+        }else if($("input[name='leaveWay']:checked").val()==="2"){
+            if ($("#beforeType").val()==="" || $("#teacherId").val()==="" || $("#uleaveDateStr").val()==="" || $("#uleaveEndStr").val()==="" || $("#uleaveReason").val()==="") {
+                $("#ts").html("请将请假信息输入完整后请假！");
+                $("#Modal").modal('show');
+            } else{
+                updateLeaves(result);
+                $('#leaveClass').modal('hide')
+            }
+        }
+    });
+    function updateLeaves(result) {
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/updateLeave.do",
+            data: {
+                id: lid,
+                applyMode:$("input[name='leaveWay']:checked").val(),
+                leaveType: $("#uleaveType").val(),
+                applyType: $("#uapplyType").val(),
+                leaveStatus: $("#uleaveStatus").val(),
+                changeType: $("#beforeType").val(),
+                applicant: $("#teacherId").val(),
+                leaveDateStr: $("#uleaveDateStr").val(),
+                leaveEndStr:$("#uleaveEndStr").val(),
+                startTimeStr: $("#ustartTimeStr").val(),
+                endTimeStr: $("#uendTimeStr").val(),
+                leaveReason: $("#uleaveReason").val(),
+                remark: $("#uremark").val(),
+                leaveLessonListStr: JSON.stringify(result)
+            },
+            dataType: "json",
+            method: "post",
+            success: function (data) {
+                if (data.result === 600005) {
+                    alert("修改成功！");
+                    $("#confirmLeave").show();
+                    $("#updateLeave").hide();
+                    $('#leaveClassForm')[0].reset();
+                    $("#class").empty();
+                    show();
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+    //修改课中异常
+    var aid = '';
+    $(document).on("click", "#aLeave", function () {
+        $("#updateAbnormal").show();
+        $("#confirmAbnormal").hide();
+        aid = $(this).parent("td").parent("tr").attr("id");
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/getLeaveById.do",
+            data: {
+                id: aid,
+            },
+            method: 'post',
+            dataType: 'json',
+            success: function (result) {
+                var data = result.data;
+                var t = data.changeType + "-" + data.applyType;
+                $("#classType").val(t);
+                if (t==="8-1"){
+                    var html='<select class="form-control" id="ratio">\
+                       <option value="">请选择扣款比例</option>\
+                       <option value="0">0%</option>\
+                       <option value="50">50%</option>\
+                       <option value="100">100%</option>\
+                      </select>';
+                    $("#charge").html(html);
+                }else{
+                    $("#charge").empty();
+                }
+                var leaveReasonText=(data.leaveReason).split("(")[0];
+                $("#ratio").val(data.deduction);
+                $("#applyType").val(data.applyType);
+                $("#teacherId1").val(data.applicant);
+                $("#teacherName1").val(data.applicantName);
+                $("#className1").val(data.classroomName);
+                $("#aleaveDateStr").val(data.leaveDateStr);
+                $("#astartTimeStr").val(data.startTimeStr);
+                $("#aendTimeStr").val(data.endTimeStr);
+                $("#aleaveReason").val(leaveReasonText);
+                $("#aremark").val(data.remark);
+                var list = data.leaveLessonList;
+                $("#class1").empty();
+                for (let i = 0; i < list.length; i++) {
+                    var html = '<tr>\
+                            <td><input type="text" style="width: 200px" class="className1" value="' + list[i].classroomName + '" cnick="'+polishData(list[i].classroomNickname)+'" ctype="'+polishData(list[i].classroomType)+'" lid="'+list[i].lessonId+'" aname="'+list[i].assistantName+'" tname="'+polishData(list[i].teacherName)+'"></td>\
+                            <td><input type="text" style="width: 100px" class="classTimes1" value="' + list[i].lessonName + '"></td>\
+                            <td style="width: 50px">\
+                            <i class="fa fa-plus add"></i>\
+                            <i class="fa fa-remove del"></i>\
+                            </td>\
+                            </tr>';
+                    $("#class1").append(html);
+                }
+                $("#astartTimeStr").hunterTimePicker();
+                $("#aendTimeStr").hunterTimePicker();
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    });
+    $("#updateAbnormal").click(function () {
+
+        var reasonText;
+        if ($("#ratio").val() !== undefined && $("#ratio").val() !=="" ){
+            reasonText=$("#aleaveReason").val()+"("+$("#ratio").find("option:selected").text()+"扣款)"
+        } else{
+            reasonText=$("#aleaveReason").val()
+        }
+
+        $("#teacherName").val("");
+        var type = $("#classType").val();
+        var type1 = type.split("-");
+        var cType = type1[0];
+        var aType = type1[1];
+        $("#applyType").val(aType);
+        let object = {};
+        let result = [];
+        let result2 = [];
+        $(".className1").each(function () {
+            object = {
+                classroomName: $(this).val(),
+                classroomNick: $(this).attr("cnick"),
+                classroomType: $(this).attr("ctype"),
+                lessonId: $(this).attr("lid"),
+                assistantName: $(this).attr("aname"),
+                teacherName: $(this).attr("tname")
+            };
+            result.push(object);
+        });
+        $(".classTimes1").each(function () {
+            result2.push($(this).val());
+        });
+        for (let i = 0; i < result.length; i++) {
+            result[i].lessonName=result2[i];
+        }
+        if ($("#classType").val()==="" || $("#teacherId1").val()==="" || $("#aleaveDateStr").val()==="" || $("#astartTimeStr").val()==="" || $("#aendTimeStr").val()==="" || $("#aleaveReason").val()==="") {
+            $("#ts").html("请将异常信息输入完整后修改！");
+            $("#Modal").modal('show');
+        } else{
+            if ($("#astartTimeStr").val()>=$("#aendTimeStr").val()) {
+                $("#ts").html("请将上课时段填写正确后修改！");
+                $("#Modal").modal('show');
+            }else{
+                $.ajax({
+                    url: "http://10.155.82.252:8080/leaves/updateLeave.do",
+                    data: {
+                        id: aid,
+                        applicant:$("#teacherId1").val(),
+                        classroomName:$("#className1").val(),
+                        applyType: $("#applyType").val(),
+                        leaveType: $("#aleaveType").val(),
+                        changeType: cType,
+                        leaveStatus: $("#aleaveStatus").val(),
+                        leaveDateStr: $("#aleaveDateStr").val(),
+                        startTimeStr: $("#astartTimeStr").val(),
+                        endTimeStr: $("#aendTimeStr").val(),
+                        leaveReason: reasonText,
+                        remark: $("#aremark").val(),
+                        deduction:$("#ratio").val(),
+                        leaveLessonListStr: JSON.stringify(result)
+                    },
+                    dataType: "json",
+                    method: "get",
+                    success: function (data) {
+                        if (data.result == 600005) {
+                            alert("修改成功！");
+                            $("#confirmAbnormal").show();
+                            $("#updateAbnormal").hide();
+                            $('#abnormalClassForm')[0].reset();
+                            $("#class1").empty();
+                            $("#charge").empty();
+                            show();
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("异常！");
+                    }
+                });
+                $('#abnormalClass').modal('hide')
+            }
+        }
+    });
+    //验证输入班级是否存在
+    $(document).on("blur","input.className", function () {
+        var name=$(this).val();
+        verify(name,$(this))
+    });
+    $(document).on("blur","input.className1", function () {
+        var name=$(this).val();
+        verify(name,$(this))
+    });
+    function verify(name,obj){
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/selectOneByName",
+            data: {
+                name: name
+            },
+            dataType: "json",
+            method: "get",
+            success: function (data) {
+                if (data.data == null) {
+                    obj.val("");
+                    alert("此班级不存在，请重新输入！");
+                }else{
+                    var datas=data.data;
+                    var aName=datas.assistantNames.join(",");
+                    obj.attr("cnick",polishData(datas.classroomNickname));
+                    obj.attr("ctype",polishData(datas.type));
+                    obj.attr("lid",datas.lessonId);
+                    obj.attr("aname",aName);
+                    obj.attr("tname",polishData(datas.teacherName));
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    //添加删除班级input
+    $(document).on("click", ".add", function () {
+        var text = '<tr>\
+                       <td><input type="text" style="width: 200px" class="className" cnick="" ctype="" lid="" aname="" tname=""></td>\
+                       <td><input type="text" style="width: 100px" class="classTimes"></td>\
+                       <td style="width: 50px"><i class="fa fa-plus add"></i>\
+                       <i class="fa fa-remove del"></i></td>\
+                    </tr>';
+        var text1 = '<tr>\
+                       <td><input type="text" style="width: 200px" class="className1" cnick="" ctype="" lid="" aname="" tname=""></td>\
+                       <td><input type="text" style="width: 100px" class="classTimes1"></td>\
+                       <td style="width: 50px"><i class="fa fa-plus add"></i>\
+                       <i class="fa fa-remove del"></i></td>\
+                     </tr>';
+        $("#class").append(text);
+        $("#class1").append(text1);
+    });
+    $(document).on("click", ".del", function () {
+        $(this).parent("td").parent("tr").empty();
+    });
+    //取消清空表单数据
+    $(".qx").click(function () {
+        $('#empty')[0].reset();
+        $('#leaveClassForm')[0].reset();
+        $('#abnormalClassForm')[0].reset();
+        $("#confirmLeave").show();
+        $("#updateLeave").hide();
+        $("#confirmAbnormal").show();
+        $("#updateAbnormal").hide();
+        $("#class").empty();
+        $("#class1").empty();
+        $("#remark").val("");
+        $("#charge").empty()
+    });
+    $(".qx1").click(function () {
+        $('#teacherSearchForm')[0].reset();
+        $("#classSearchForm")[0].reset();
+    });
+    //审批
+    var cid = '';
+    $(document).on("click", ".check", function () {
+        cid = $(this).parent("td").parent("tr").attr("id");
+    });
+    $("#pass").click(function () {
+        check(2);
+    });
+    $("#turn").click(function () {
+        check(3);
+    });
+    $(document).on("click", "#setInvalid", function () {
+        cid = $(this).parent("td").parent("tr").attr("id");
+        check(3);
+    });
+    function check(num) {
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/updateLeave.do",
+            data: {
+                id: cid,
+                leaveStatus: num,
+                approvalRemark: $("#remark").val(),
+            },
+            dataType: "json",
+            method: "post",
+            success: function (data) {
+                if (data.result == 600005) {
+                    alert("成功！");
+                    $("#remark").val("");
+                    show();
+                } else {
+                    alert(data.message);
+                    $("#remark").val("");
+                }
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+    //异常课次页面
+    //显示classTable
+    function showClassTable(currPage, pageSize) {
+        var choose;
+        if ($("#switchType").selectpicker('val')===null){
+            choose="";
+        } else if($("#switchType").selectpicker('val').length === 1){
+            choose=$("#switchType").selectpicker('val')[0];
+        }else{
+            choose=$("#switchType").selectpicker('val').join(",");
+        }
+        $("#cun").val(choose);
+        $.ajax({
+            url: "http://10.155.82.252:8080/leaves/getAbnormalListPage.do",
+            data: {
+                pageNum: currPage,
+                pageSize: pageSize,
+                dateRange: $("#classDateRange").val(),
+                classroomName: $("#classroomName").val(),
+                classroomNick: $("#classroomNick").val(),
+                assistantName: $("#assistantName1").val(),
+                applicantName: $("#applicantName").val(),
+                changeTypeName: choose,
+                applyType: $("#unusualType").val(),
+                channel:$("#channel").val()
+            },
+            dataType: "json",
+            method: "post",
+            success: function (data) {
+                if (data.total < 1) {
+                    $('#classTable').html("<h3 class='text-center'>未查询到匹配数据</h3>");
+                    $("#pagination_3").empty();
+                    return;
+                }
+                var html = '<table class="table table-bordered">\
+                        <thead>\
+                            <tr class="info">\
+                            <th>异常归属人</th>\
+                            <th>异常归属类型</th>\
+                            <th>异常类型</th>\
+                            <th>影响班级</th>\
+                            <th>班级昵称</th>\
+                            <th>班级类型</th>\
+                            <th>影响时段</th>\
+                            <th>课次</th>\
+                            <th>班主任</th>\
+                            <th>授课老师</th>\
+                            <th>申请人</th>\
+                            <th>最后操作人</th>\
+                            <th>最后操作时间</th>\
+                            <th>渠道</th>\
+                            <th>异常原因</th>\
+                            <th>备注</th>\
+                            </tr>\
+                      </thead>\
+                      <tbody>';
+                for (let i = 0; i < data.list.length; i++) {
+                    var ztime = (formatDate(data.list[i].updateTime));
+                    html += '<tr>\
+                               <td>' + data.list[i].applicantName + '</td>\
+                               <td>' + data.list[i].applyTypeName + '</td>\
+                               <td>' + data.list[i].changeTypeName + '</td>';
+                                if(data.list[i].classroomName===null){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].classroomName + '</td>'
+                                }
+                               if(data.list[i].classroomNick===null || data.list[i].classroomNick===undefined){
+                                   html+='<td></td>'
+                               }else{
+                                   html+='<td>' + data.list[i].classroomNick + '</td>'
+                               }
+                                if(data.list[i].classroomType===null ||data.list[i].classroomType===undefined){
+                                    html+='<td></td>'
+                                }else {
+                                    html+='<td>' + data.list[i].classroomType + '</td>'
+                                }
+                      html += '<td>' + data.list[i].timeStr + '</td>';
+                                if(data.list[i].lessonName===null){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].lessonName + '</td>'
+                                }
+                                if(data.list[i].assistantName===null){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].assistantName + '</td>'
+                                }
+                                if(data.list[i].teacherName===null ||data.list[i].teacherName===undefined){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].teacherName + '</td>'
+                                }
+                                if(data.list[i].createUser===null){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].createUser + '</td>'
+                                }
+                                if(data.list[i].updateUser===null){
+                                    html+='<td></td>'
+                                }else{
+                                    html+='<td>' + data.list[i].updateUser + '</td>'
+                                }
+                    html += '<td>' + ztime + '</td>';
+                    if(data.list[i].channel===null ||data.list[i].channel===undefined){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].channel + '</td>'
+                    }
+                    if(data.list[i].leaveReason===null){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].leaveReason + '</td>'
+                    }
+                    if(data.list[i].remark===null){
+                        html+='<td></td>'
+                    }else{
+                        html+='<td>' + data.list[i].remark + '</td>'
+                    }
+                    html += '</tr>';
+                }
+                html += '</tbody></table>';
+                $("#classTable").html(html);
+                //设置分页插件显示
+                $("#pagination_3").whjPaging("setPage", {
+                    currPage: data.pageNum,
+                    totalPage: data.pages,
+                    totalSize: data.total
+                });
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    $("#pagination_3").whjPaging({
+        //设为true时，ajax里的success函数必须调用setPage方法，否则分页插件显示保持不变
+        isShowRefresh: false,
+        callBack: function (currPage, pageSize) {
+            showClassTable(currPage, pageSize)
+        }
+    });
+    //点击异常课次切换tab时显示页面
+    $("#unusual").click(function () {
+        showClassTable(1, 10)
+    });
+    //搜索
+    $("#seek").click(function () {
+        showClassTable(1, 10)
+    });
+
+    //监听日期改变清空class div
+    $(document).on("change", "#uleaveDateStr,#ustartTimeStr,#uendTimeStr,#uleaveEndStr", function () {
+        $("#class").empty()
+    });
+    $(document).on("change", "#aleaveDateStr,#astartTimeStr,#aendTimeStr", function () {
+        $("#class1").empty()
+    });
+    //导出表格
+    $("#export").click(function () {
+        // showClassTable(1, 10)
+        alert("导出数据较多的情况下会比较慢，请耐心等待!");
+        var href = "http://10.155.82.252:8080/leaves/abnormalExport?" + $('#my-form').serialize();
+        window.location.href = href;
+    });
+
+    $("#qk").click(function () {
+        $("#switchType").selectpicker('deselectAll');
+    });
+
+    //日期插件
+    function dateRange(divSelect, inputSelect) {
+        $(divSelect).daterangepicker({
+            minDate: '01/01/2015',	//最小时间
+            dateLimit: {
+                days: 365 * 5
+            }, //起止时间的最大间隔
+            showDropdowns: true,
+            showWeekNumbers: false, //是否显示第几周
+            timePicker: false, //是否显示小时和分钟
+            timePickerIncrement: 60, //时间的增量，单位为分钟
+            timePicker12Hour: false, //是否使用12小时制来显示时间
+            ranges: {
+                '今日': [moment(), moment()],
+                '三日': [moment(), moment().add('days', 2)],
+                '最近7日': [moment(), moment().add('days', 6)],
+                '最近30日': [moment(), moment().add('days', 29)],
+                '最近半年': [moment(), moment().add('month', 6)],
+                '最近一年': [moment(), moment().add('year', 1)]
+            },
+            opens: 'right', //日期选择框的弹出位置
+            buttonClasses: ['btn btn-default'],
+            applyClass: 'btn-small btn-primary blue',
+            cancelClass: 'btn-small',
+            format: 'YYYY-MM-DD', //控件中from和to 显示的日期格式
+            separator: ' to ',
+            locale: {
+                applyLabel: '确定',
+                cancelLabel: '取消',
+                fromLabel: '起始时间',
+                toLabel: '结束时间',
+                customRangeLabel: '自定义',
+                daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+                    '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                firstDay: 1
+            }	//汉化日期控件
+        }, function (start, end, label) {
+            //格式化日期显示框
+            $(inputSelect).val(start.format('YYYY-MM-DD') + '~' + end.format('YYYY-MM-DD'));
+        });
+    }
+    //时间转换
+    function formatDate(timestamp) {
+        if (timestamp) {
+            var time = new Date(timestamp);
+            var y = time.getFullYear();
+            var M = time.getMonth() + 1;
+            var d = time.getDate();
+            var h = time.getHours();
+            var m = time.getMinutes();
+            var s = time.getSeconds();
+            return y + '-' + addZero(M) + '-' + addZero(d) + ' ' + addZero(h) + ':' + addZero(m) + ':' + addZero(s);
+        } else {
+            return '';
+        }
+    }
+    function addZero(m) {
+        return m < 10 ? '0' + m : m;
+    }
+    //将null的数据转为""
+    function polishData(string) {
+        return ((string==null)?"":string);
+    }
+</script>
+</body>
+</html>
