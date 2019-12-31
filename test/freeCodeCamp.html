@@ -615,17 +615,33 @@
     // 基本布尔类型即 true 和 false。
     //     Boolean Objects
 
-    // function boo(bool) {
-    //     // What is the new fad diet for ghost developers? The Boolean.
-    //     // if (bool === true || bool === false) {
-    //     //     return true;
-    //     // }else{
-    //     //     return false;
-    //     // }
-    //     return typeof bool==='boolean';
-    // }
-    //
-    // boo(null);
+//     function boo(bool) {
+//         // What is the new fad diet for ghost developers? The Boolean.
+//         // if (bool === true || bool === false) {
+//         //     return true;
+//         // }else{
+//         //     return false;
+//         // }
+//         return typeof bool==='boolean';
+//     }
+//
+//     boo(null);
+
+//    Smallest Common Multiple
+//    找出能被两个给定参数和它们之间的连续数字整除的最小公倍数。
+
+//    1.求最大公约数，使用的公式是欧几里德定律
+        function gcd(m,n){
+            console.log('m:'+m,'n:'+n);
+            if(m%n===0){
+                console.log('最大公约数:'+n);
+                return n;
+            }
+            console.log(n,m%n);
+            console.log('m%n:'+m%n);
+           return gcd(n,m%n);
+        }
+        gcd(80,150)
 
     
 
